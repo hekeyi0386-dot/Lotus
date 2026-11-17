@@ -163,7 +163,7 @@ function homePage() {
 	];
 	return `<main class="main site-width" data-page="home">
 		${heroMarkup()}
-		<section aria-labelledby="promotion-title"><div class="section-heading"><div><h2 id="promotion-title">Deals &amp; Promotions</h2><p>Fresh picks and good finds, updated weekly.</p></div><a class="text-link" href="${routeUrl("deals")}" data-route>View All Deals ${icon("arrow")}</a></div>
+		<section aria-labelledby="promotion-title"><div class="section-heading"><div><h2 id="promotion-title">Deals &amp; Promotions</h2></div><a class="text-link" href="${routeUrl("deals")}" data-route>View All Deals ${icon("arrow")}</a></div>
 			<div class="promotion-grid">${promotions.map((promo) => `<a class="promotion-card" href="${routeUrl("deals", new URLSearchParams(`deal=${promo.deal}${promo.category ? `&category=${promo.category}` : ""}`))}" data-route><img src="${imagePlaceholder}" alt="${promo.title} image placeholder"><span class="promotion-copy"><small>${promo.tag}</small><h3>${promo.title}</h3><p>${promo.copy}</p></span></a>`).join("")}</div>
 		</section>
 	</main>`;
@@ -201,7 +201,7 @@ function shopPage(params) {
 }
 
 function dealTabs(activeDeal) {
-	return `<div class="deal-tabs" role="tablist" aria-label="Deal categories">${deals.map((deal) => `<button class="deal-tab" type="button" role="tab" aria-selected="${deal.id === activeDeal}" data-deal="${deal.id}">${icon(deal.icon)}${deal.label}</button>`).join("")}</div>`;
+	return `<div class="deal-tabs" role="tablist" aria-label="Deal categories">${deals.map((deal) => `<button class="deal-tab" type="button" role="tab" aria-selected="${deal.id === activeDeal}" data-deal="${deal.id}">${deal.label}</button>`).join("")}</div>`;
 }
 
 function dealsPage(params) {
@@ -210,7 +210,7 @@ function dealsPage(params) {
 	const focusedCategory = params.get("category") || "all";
 	return `<main class="main site-width" data-page="deals"><header class="deals-intro"><h1>Deals &amp; Promotions</h1><p>Save more on your favorite Asian groceries.</p></header>
 		${dealTabs(activeDeal)}
-		<div class="deal-toolbar"><div>${productFilters(params, true)}</div><span class="discount-note">${icon("tag")} Sale prices shown while supplies last</span></div>
+		<div class="deal-toolbar"><div>${productFilters(params, true)}</div><span class="discount-note">Sale prices shown while supplies last</span></div>
 		<section id="deal-products" aria-label="Discounted products"><div class="catalog-heading"><div><h2>${deal.label}</h2><span class="product-count" id="product-count"></span></div><label class="catalog-sort">Sort by <select class="filter-select" data-filter="sort" aria-label="Sort deals"><option value="savings" ${params.get("sort") === "savings" || !params.get("sort") ? "selected" : ""}>Biggest Savings</option><option value="price-low" ${params.get("sort") === "price-low" ? "selected" : ""}>Price: Low to High</option><option value="price-high" ${params.get("sort") === "price-high" ? "selected" : ""}>Price: High to Low</option></select></label></div><div class="product-grid" id="product-grid"></div><div class="load-more-row" id="load-more-row"></div></section>
 	</main>`;
 }
