@@ -76,8 +76,8 @@ let toastTimer;
 function icon(name) {
 	const paths = {
 		pin: '<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+		user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
 		search: '<circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/>',
-		truck: '<path d="M3 6h11v11H3zM14 10h4l3 3v4h-7z"/><circle cx="7.5" cy="18" r="1.7"/><circle cx="18" cy="18" r="1.7"/>',
 		heart: '<path d="M20.8 8.8c0 5.2-8.8 10.1-8.8 10.1S3.2 14 3.2 8.8A4.4 4.4 0 0 1 12 6.7a4.4 4.4 0 0 1 8.8 2.1Z"/>',
 		cart: '<path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>',
 		arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
@@ -102,9 +102,9 @@ function icon(name) {
 const imagePlaceholder = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420"><rect width="600" height="420" fill="#e5e5e5"/></svg>')}`;
 
 const heroSlides = [
-	{ eyebrow: "YOUR NEIGHBORHOOD ASIAN MARKET", title: "Fresh Asian Groceries in Pittsburgh", copy: "Your local source for Asian food, products, and more.", button: "Shop All Products", image: imagePlaceholder },
-	{ eyebrow: "GOOD FOOD, GOOD COMPANY", title: "Bring something delicious home", copy: "Discover familiar favorites and something new for your table.", button: "Browse the Shop", image: imagePlaceholder },
-	{ eyebrow: "FRESH PICKS THIS WEEK", title: "A little market inspiration", copy: "Find seasonal produce, pantry staples, and neighborhood favorites.", button: "Explore New Arrivals", image: imagePlaceholder, new: true }
+	{ title: "Taste Asia in One Stop", copy: "Your local source for Asian food, products, and more.", button: "Shop Now", destination: "shop", image: imagePlaceholder },
+	{ title: "Everything for Your Table.", copy: "Discover familiar favorites and something new for your table.", button: "Explore Deals", destination: "deals", image: imagePlaceholder },
+	{ title: "Pittsburgh's First Asian Grocery", copy: "Find seasonal produce, pantry staples, and neighborhood favorites.", button: "Explore Our Store", destination: "shop", image: imagePlaceholder }
 ];
 
 function cartCount() {
@@ -123,24 +123,18 @@ function header(activeRoute) {
 	const current = (route) => activeRoute === route ? ' aria-current="page"' : "";
 	return `
 		<div class="utility-bar"><div class="utility-inner site-width">
-			<div class="utility-location"><a class="utility-link" href="#location">${icon("pin")} Pittsburgh, PA ${icon("chevron")}</a></div>
+			<div class="utility-location"><select class="language-select" aria-label="Language"><option selected>English</option></select><a class="utility-link" href="#location">${icon("pin")} Pittsburgh, PA ${icon("chevron")}</a></div>
 			<div class="utility-links">
-				<a class="utility-link" href="#orders" data-dialog="orders">My Orders</a>
-				<span class="utility-separator" aria-hidden="true"></span>
-				<a class="utility-link" href="#sign-in" data-dialog="account">Sign In</a>
-				<a class="utility-link" href="#register" data-dialog="account">Register</a>
-				<select class="language-select" aria-label="Language"><option selected>English</option></select>
+				<div class="account-display"><span class="account-display-icon">${icon("user")}</span><span class="account-display-copy"><span class="account-welcome">Welcome to Lotus!</span><span class="account-sign-in">Sign In / Register</span></span></div>
+				<a class="utility-link utility-action" href="#orders" data-dialog="orders">My Orders</a>
+				<button class="utility-icon-button" type="button" aria-label="Wishlist" data-dialog="wishlist">${icon("heart")}</button>
+				<a class="cart-button utility-cart" href="#cart" data-dialog="cart" aria-label="Shopping cart, ${cartCount()} items">${icon("cart")}<span class="cart-count" id="cart-count">${cartCount()}</span></a>
 			</div>
 		</div></div>
 		<header class="main-header"><div class="header-inner site-width">
 			<a class="brand" href="${routeUrl("home")}" data-route aria-label="Lotus Food home"><img class="brand-logo" src="${assetUrl("logolotus.png")}" alt="Lotus Food Asian grocery, Since 1989"></a>
 			<div class="header-tools">
-				<form class="search-form" id="site-search" role="search"><input name="q" type="search" placeholder="Search for products, noodles, snacks..." aria-label="Search products"><button aria-label="Search">${icon("search")}</button></form>
-				<div class="header-actions">
-					<button class="delivery-button" type="button" data-dialog="delivery">${icon("truck")}<span>Delivery Instructions</span></button>
-					<button class="header-icon-button" type="button" aria-label="Wishlist" data-dialog="wishlist">${icon("heart")}</button>
-					<a class="cart-button" href="#cart" data-dialog="cart" aria-label="Shopping cart, ${cartCount()} items">${icon("cart")}<span>Cart</span><span class="cart-count" id="cart-count">${cartCount()}</span></a>
-				</div>
+				<form class="search-form" id="site-search" role="search"><input name="q" type="search" placeholder="Find Your Taste of Asia..." aria-label="Search products"><button aria-label="Search">${icon("search")}</button></form>
 			</div>
 		</div></header>
 		<nav class="primary-nav" aria-label="Primary navigation"><div class="nav-inner site-width">
@@ -154,7 +148,7 @@ function header(activeRoute) {
 function heroMarkup(index = 0) {
 	const slide = heroSlides[index];
 	return `<section class="hero" aria-label="Featured promotion" data-hero-slide="${index}">
-		<div class="hero-copy"><span class="hero-eyebrow">${slide.eyebrow}</span><h1>${slide.title}</h1><p class="hero-description">${slide.copy}</p><a class="button-primary" href="${routeUrl("shop", new URLSearchParams(slide.new ? "collection=new" : ""))}" data-route>${slide.button} ${icon("arrow")}</a></div>
+		<div class="hero-copy"><h1>${slide.title}</h1><p class="hero-description">${slide.copy}</p><a class="button-primary" href="${routeUrl(slide.destination)}" data-route><span>${slide.button}</span>${icon("arrow")}</a></div>
 		<div class="hero-media"><img src="${slide.image}" alt="Fresh Asian grocery image placeholder"></div>
 		<div class="hero-controls"><button class="hero-arrow" type="button" aria-label="Previous slide" data-hero="prev">‹</button><div class="hero-dots">${heroSlides.map((_, dot) => `<button class="hero-dot" type="button" aria-label="Slide ${dot + 1}" aria-current="${index === dot}" data-hero="${dot}"></button>`).join("")}</div><button class="hero-arrow" type="button" aria-label="Next slide" data-hero="next">›</button></div>
 	</section>`;
@@ -169,12 +163,6 @@ function homePage() {
 	];
 	return `<main class="main site-width" data-page="home">
 		${heroMarkup()}
-		<section class="quick-strip" aria-label="Quick links">
-			<a class="quick-link" href="#delivery" data-dialog="delivery"><span class="quick-icon">${icon("truck")}</span><span class="quick-copy"><strong>Local Delivery</strong><span>Convenient &amp; reliable</span></span></a>
-			<a class="quick-link" href="${routeUrl("deals", new URLSearchParams("deal=weekly"))}" data-route><span class="quick-icon">${icon("tag")}</span><span class="quick-copy"><strong>Weekly Deals</strong><span>Save on neighborhood favorites</span></span></a>
-			<a class="quick-link" href="${routeUrl("shop", new URLSearchParams("collection=new"))}" data-route><span class="quick-icon">${icon("star")}</span><span class="quick-copy"><strong>New Arrivals</strong><span>Discover what's new</span></span></a>
-			<a class="quick-link" href="#restaurant-orders" data-dialog="restaurant"><span class="quick-icon">${icon("bowl")}</span><span class="quick-copy"><strong>Restaurant Orders</strong><span>Order from our kitchen</span></span></a>
-		</section>
 		<section aria-labelledby="promotion-title"><div class="section-heading"><div><h2 id="promotion-title">Deals &amp; Promotions</h2><p>Fresh picks and good finds, updated weekly.</p></div><a class="text-link" href="${routeUrl("deals")}" data-route>View All Deals ${icon("arrow")}</a></div>
 			<div class="promotion-grid">${promotions.map((promo) => `<a class="promotion-card" href="${routeUrl("deals", new URLSearchParams(`deal=${promo.deal}${promo.category ? `&category=${promo.category}` : ""}`))}" data-route><img src="${imagePlaceholder}" alt="${promo.title} image placeholder"><span class="promotion-copy"><small>${promo.tag}</small><h3>${promo.title}</h3><p>${promo.copy}</p></span></a>`).join("")}</div>
 		</section>
@@ -287,10 +275,8 @@ function showToast(message) {
 
 function renderDialog(kind) {
 	const content = {
-		delivery: ["Delivery Instructions", "Delivery notes can be added to your order during checkout. Choose your delivery preferences after adding items to your cart."],
 		restaurant: ["Restaurant Orders", "Restaurant ordering information is not connected yet. Please check back soon."],
-		account: ["Lotus Food Account", "Sign-in and registration will be available when the store account service is connected."],
-		orders: ["My Orders", "Order history will appear here after you sign in to a Lotus Food account."],
+		orders: ["My Orders", "Order history is not available in this store preview."],
 		cart: ["Your Cart", cart.size ? [...cart].map(([id, quantity]) => {
 			const product = products.find((item) => item.id === id);
 			return `<div class="dialog-item"><strong>${product.name}</strong><span>${quantity} × $${product.price.toFixed(2)}</span></div>`;
@@ -375,11 +361,10 @@ app.addEventListener("click", (event) => {
 		const hero = app.querySelector(".hero");
 		const slide = heroSlides[next];
 		hero.dataset.heroSlide = next;
-		hero.querySelector(".hero-eyebrow").textContent = slide.eyebrow;
 		hero.querySelector("h1").textContent = slide.title;
 		hero.querySelector(".hero-description").textContent = slide.copy;
-		hero.querySelector(".button-primary").href = routeUrl("shop", new URLSearchParams(slide.new ? "collection=new" : ""));
-		hero.querySelector(".button-primary").textContent = `${slide.button} →`;
+		hero.querySelector(".button-primary").href = routeUrl(slide.destination);
+		hero.querySelector(".button-primary span").textContent = slide.button;
 		hero.querySelector(".hero-media img").src = slide.image;
 		hero.querySelectorAll(".hero-dot").forEach((dot, index) => dot.setAttribute("aria-current", String(index === next)));
 		return;
