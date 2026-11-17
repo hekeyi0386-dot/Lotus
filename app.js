@@ -60,11 +60,11 @@ const products = [
 ];
 
 const deals = [
-	{ id: "weekly", label: "Weekly Deals", icon: "tag", heading: "This Week's Best Deals", copy: "Limited-time savings on popular Asian groceries.", cta: "Shop Weekly Deals" },
-	{ id: "group", label: "Group Buy", icon: "users", heading: "Better Together", copy: "Share a bundle, save a little more on the things you love.", cta: "Shop Group Buys" },
-	{ id: "clearance", label: "Clearance", icon: "spark", heading: "Good Finds, Great Prices", copy: "Enjoy extra savings on select pantry and fresh-market picks.", cta: "Shop Clearance" },
-	{ id: "buy1", label: "Buy 1 Get 2", icon: "gift", heading: "One for You, Two More to Enjoy", copy: "Limited-time multi-buy offers on neighborhood favorites.", cta: "Shop Buy 1 Get 2" },
-	{ id: "buy2", label: "Buy 2 Get 3", icon: "gift", heading: "Stock Up and Save", copy: "More of your everyday favorites for less.", cta: "Shop Buy 2 Get 3" }
+	{ id: "weekly", label: "Weekly Deals", icon: "tag" },
+	{ id: "group", label: "Group Buy", icon: "users" },
+	{ id: "clearance", label: "Clearance", icon: "spark" },
+	{ id: "buy1", label: "Buy 1 Get 2", icon: "gift" },
+	{ id: "buy2", label: "Buy 2 Get 3", icon: "gift" }
 ];
 
 const app = document.querySelector("#app");
@@ -210,7 +210,6 @@ function dealsPage(params) {
 	const focusedCategory = params.get("category") || "all";
 	return `<main class="main site-width" data-page="deals"><header class="deals-intro"><h1>Deals &amp; Promotions</h1><p>Save more on your favorite Asian groceries.</p></header>
 		${dealTabs(activeDeal)}
-		<section class="deal-hero" aria-label="Featured deal"><img src="${imagePlaceholder}" alt="Asian grocery promotion image placeholder"><div class="deal-hero-copy"><h2>${deal.heading}</h2><p>${deal.copy}</p><a class="button-primary" href="#deal-products" data-scroll="deal-products">${deal.cta} ${icon("arrow")}</a></div></section>
 		<div class="deal-toolbar"><div>${productFilters(params, true)}</div><span class="discount-note">${icon("tag")} Sale prices shown while supplies last</span></div>
 		<section id="deal-products" aria-label="Discounted products"><div class="catalog-heading"><div><h2>${deal.label}</h2><span class="product-count" id="product-count"></span></div><label class="catalog-sort">Sort by <select class="filter-select" data-filter="sort" aria-label="Sort deals"><option value="savings" ${params.get("sort") === "savings" || !params.get("sort") ? "selected" : ""}>Biggest Savings</option><option value="price-low" ${params.get("sort") === "price-low" ? "selected" : ""}>Price: Low to High</option><option value="price-high" ${params.get("sort") === "price-high" ? "selected" : ""}>Price: High to Low</option></select></label></div><div class="product-grid" id="product-grid"></div><div class="load-more-row" id="load-more-row"></div></section>
 	</main>`;
