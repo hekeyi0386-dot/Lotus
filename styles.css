@@ -90,9 +90,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .language-select option { color: var(--ink); }
 
 .main-header { background: var(--paper); }
-.header-inner { display: grid; min-height: 100px; grid-template-columns: 196px minmax(0, 1fr); align-items: center; gap: 25px; }
+.header-inner { display: grid; min-height: 100px; grid-template-columns: 226px minmax(0, 1fr); align-items: center; gap: 20px; }
 .brand { display: inline-flex; width: 100%; align-items: center; color: var(--forest); line-height: 1; }
-.brand-logo { width: min(190px, 100%); height: auto; object-fit: contain; }
+.brand-logo { width: min(220px, 100%); height: auto; object-fit: contain; }
 .header-tools { display: flex; min-width: 0; align-items: center; }
 .search-form { display: flex; min-width: 0; height: 48px; flex: 1; overflow: hidden; border: 1px solid var(--neutral-border); border-radius: 6px; background: var(--cream); }
 .search-form:focus-within { border-color: var(--green); box-shadow: 0 0 0 3px rgba(var(--green-rgb),.12); }
@@ -241,8 +241,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	.site-width { width: calc(100% - 40px); }
 	.utility-inner { gap: 20px; }
 	.utility-links { gap: 24px; }
-	.header-inner { grid-template-columns: 170px minmax(0, 1fr); gap: 15px; }
-	.brand-logo { width: min(164px, 100%); }
+	.header-inner { grid-template-columns: 194px minmax(0, 1fr); gap: 15px; }
+	.brand-logo { width: min(194px, 100%); }
 	.header-tools { gap: 12px; }
 	.product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 	.hero { min-height: 360px; }
@@ -254,7 +254,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	.utility-location { justify-content: center; gap: 22px; }
 	.utility-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 12px 18px; }
 	.account-display { margin-right: 0; }
-	.header-inner { min-height: 0; grid-template-columns: 1fr auto; gap: 13px; padding-block: 14px; }
+	.header-inner { min-height: 0; grid-template-columns: 1fr auto; gap: 13px; padding-block: 9.5px; }
 	.header-tools { display: contents; }
 	.search-form { grid-column: 1 / -1; grid-row: 2; }
 	.nav-inner { min-height: 52px; }
@@ -300,8 +300,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	.account-display-icon { width: 30px; height: 30px; flex-basis: 30px; }
 	.account-display-icon svg { width: 17px; height: 17px; }
 	.language-select { padding-inline: 7px; }
-	.brand-logo { width: min(140px, 100%); }
-	.header-inner { gap: 12px 8px; }
+	.brand-logo { width: min(162px, 100%); }
+	.header-inner { gap: 12px 8px; padding-block: 11px; }
 	.hero-copy { min-height: 300px; padding: 24px; }
 	.hero h1 { font-size: clamp(36px, 10vw, 44px); }
 	.quick-link { gap: 8px; padding-inline: 9px; }
