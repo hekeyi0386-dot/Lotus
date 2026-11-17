@@ -88,7 +88,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .account-sign-in { border-bottom: 0; color: var(--paper); font-size: 16px; font-weight: 500; text-decoration: none; transition: color 200ms ease; }
 .account-sign-in::after { content: none; }
 .account-sign-in:hover { color: #FA8840; }
-.language-select { width: 108px; min-width: 108px; flex: 0 0 108px; appearance: none; -webkit-appearance: none; padding: 3px 34px 3px 16px; border: 1px solid rgba(var(--white-rgb),.35); border-radius: 999px; color: var(--paper); background-color: transparent; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-position: right 12px center; background-repeat: no-repeat; background-size: 15px 15px; font-size: 16px; font-weight: 400; }
+.language-select { width: 120px; min-width: 120px; flex: 0 0 120px; appearance: none; -webkit-appearance: none; padding: 3px 40px 3px 16px; border: 1px solid rgba(var(--white-rgb),.35); border-radius: 999px; color: var(--paper); background-color: transparent; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-position: right 20px center; background-repeat: no-repeat; background-size: 15px 15px; font-size: 16px; font-weight: 400; }
 .language-select option { color: var(--ink); }
 
 .main-header { background: var(--paper); }
@@ -184,7 +184,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .collection-chip[aria-pressed="true"] { border-color: var(--orange); color: var(--orange-dark); background: var(--soft-orange); }
 .catalog-sort { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; }
 .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-.filter-select, .deal-filter { min-height: 32px; appearance: none; -webkit-appearance: none; padding: 0 34px 0 12px; border: 1px solid var(--neutral-border); border-radius: 5px; color: var(--ink); background-color: var(--paper); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23292d1f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-position: right 12px center; background-repeat: no-repeat; background-size: 15px 15px; font-size: 10px; }
+.filter-select, .deal-filter { min-height: 32px; appearance: none; -webkit-appearance: none; padding: 0 48px 0 12px; border: 1px solid var(--neutral-border); border-radius: 5px; color: var(--ink); background-color: var(--paper); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23292d1f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-position: right 20px center; background-repeat: no-repeat; background-size: 15px 15px; font-size: 16px; font-weight: 400; }
+.filter-select option, .deal-filter option { font-size: 16px; font-weight: 400; }
 .filter-select:focus, .deal-filter:focus { border-color: var(--green); }
 .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .product-card { position: relative; display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); box-shadow: 0 2px 8px rgba(var(--forest-rgb),.05); transition: transform .18s ease, box-shadow .18s ease; }
@@ -325,6 +326,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	.product-price { font-size: 16px; }
 	.add-button { min-height: 36px; font-size: 13px; }
 	.filter-row { gap: 6px; }
-	.filter-select { min-height: 30px; padding-inline: 12px 34px; }
+	.filter-select { min-height: 30px; padding: 0 48px 0 12px; }
 	.deal-tabs { margin-right: 0; }
 }
