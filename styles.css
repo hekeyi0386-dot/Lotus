@@ -87,7 +87,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .account-sign-in { border-bottom: 0; color: var(--paper); font-size: 16px; font-weight: 500; text-decoration: none; transition: color 200ms ease; }
 .account-sign-in::after { content: none; }
 .account-sign-in:hover { color: #FA8840; }
-.language-select { width: max-content; min-width: 90px; flex: 0 0 auto; padding: 3px 12px; border: 1px solid rgba(var(--white-rgb),.35); border-radius: 999px; color: var(--paper); background: transparent; font-size: 16px; font-weight: 400; }
+.language-select { width: 108px; min-width: 108px; flex: 0 0 108px; padding: 3px 16px; border: 1px solid rgba(var(--white-rgb),.35); border-radius: 999px; color: var(--paper); background: transparent; font-size: 16px; font-weight: 400; }
 .language-select option { color: var(--ink); }
 
 .main-header { background: var(--paper); }
