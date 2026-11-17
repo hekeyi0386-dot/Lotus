@@ -102,9 +102,9 @@ function icon(name) {
 const imagePlaceholder = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420"><rect width="600" height="420" fill="#e5e5e5"/></svg>')}`;
 
 const heroSlides = [
-	{ title: "Taste Asia in One Stop", copy: "Your local source for Asian food, products, and more.", button: "Shop Now", destination: "shop", image: imagePlaceholder },
-	{ title: "Everything for Your Table.", copy: "Discover familiar favorites and something new for your table.", button: "Explore Deals", destination: "deals", image: imagePlaceholder },
-	{ title: "Pittsburgh's First Asian Grocery", copy: "Find seasonal produce, pantry staples, and neighborhood favorites.", button: "Explore Our Store", destination: "shop", image: imagePlaceholder }
+	{ title: "Taste Asia in One Stop", copy: "Your local source for Asian food, products, and more.", button: "Shop Now", destination: "shop", image: assetUrl("hero1.png"), alt: "Lotus Food Company storefront" },
+	{ title: "Everything for Your Table.", copy: "Discover familiar favorites and something new for your table.", button: "Explore Deals", destination: "deals", image: assetUrl("hero2.png"), alt: "Entrance to Lotus Food Company" },
+	{ title: "Pittsburgh's First Asian Grocery", copy: "Find seasonal produce, pantry staples, and neighborhood favorites.", button: "Explore Our Store", destination: "shop", image: assetUrl("hero3.png"), alt: "Frozen Asian dumplings at Lotus Food Company" }
 ];
 
 function cartCount() {
@@ -149,7 +149,7 @@ function heroMarkup(index = 0) {
 	const slide = heroSlides[index];
 	return `<section class="hero" aria-label="Featured promotion" data-hero-slide="${index}">
 		<div class="hero-copy"><h1>${slide.title}</h1><p class="hero-description">${slide.copy}</p><a class="button-primary" href="${routeUrl(slide.destination)}" data-route><span>${slide.button}</span>${icon("arrow")}</a></div>
-		<div class="hero-media"><img src="${slide.image}" alt="Fresh Asian grocery image placeholder"></div>
+		<div class="hero-media"><img src="${slide.image}" alt="${slide.alt}"></div>
 		<div class="hero-controls"><button class="hero-arrow" type="button" aria-label="Previous slide" data-hero="prev">‹</button><div class="hero-dots">${heroSlides.map((_, dot) => `<button class="hero-dot" type="button" aria-label="Slide ${dot + 1}" aria-current="${index === dot}" data-hero="${dot}"></button>`).join("")}</div><button class="hero-arrow" type="button" aria-label="Next slide" data-hero="next">›</button></div>
 	</section>`;
 }
@@ -364,7 +364,9 @@ app.addEventListener("click", (event) => {
 		hero.querySelector(".hero-description").textContent = slide.copy;
 		hero.querySelector(".button-primary").href = routeUrl(slide.destination);
 		hero.querySelector(".button-primary span").textContent = slide.button;
-		hero.querySelector(".hero-media img").src = slide.image;
+		const heroImage = hero.querySelector(".hero-media img");
+		heroImage.src = slide.image;
+		heroImage.alt = slide.alt;
 		hero.querySelectorAll(".hero-dot").forEach((dot, index) => dot.setAttribute("aria-current", String(index === next)));
 		return;
 	}
