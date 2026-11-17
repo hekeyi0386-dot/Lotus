@@ -74,12 +74,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .cart-count { display: grid; min-width: 19px; height: 19px; place-items: center; padding-inline: 5px; border-radius: 99px; color: var(--ink); background: var(--orange); font-size: 10px; }
 
 .primary-nav { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper); }
-.nav-inner { display: flex; min-height: 52px; align-items: stretch; gap: 35px; }
-.nav-link { position: relative; display: inline-flex; align-items: center; color: var(--ink); font-size: 13px; font-weight: 700; }
-.nav-link::after { position: absolute; right: 0; bottom: 0; left: 0; height: 3px; content: ""; transform: scaleX(0); transform-origin: left; background: var(--orange); transition: transform .18s ease; }
+.nav-inner { display: grid; min-height: 52px; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; padding-inline: clamp(16px, 2.5vw, 32px); }
+.primary-nav .nav-inner { width: 100%; max-width: none; margin: 0; }
+.nav-link { display: flex; min-width: 0; align-items: center; justify-content: center; color: var(--ink); font-size: 13px; font-weight: 700; text-align: center; }
+.nav-link > span { position: relative; display: inline-flex; max-width: 100%; align-items: center; justify-content: center; }
+.nav-link > span::after { position: absolute; right: 0; bottom: 0; left: 0; height: 3px; content: ""; transform: scaleX(0); transform-origin: center; background: var(--orange); transition: transform .18s ease; }
 .nav-link:hover, .nav-link[aria-current="page"] { color: var(--forest); }
-.nav-link:hover::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
-.nav-link.restaurant-link { gap: 6px; }
+.nav-link:hover > span::after, .nav-link[aria-current="page"] > span::after { transform: scaleX(1); }
+.nav-link.restaurant-link > span { gap: 6px; }
 .nav-link.restaurant-link svg { width: 14px; height: 14px; }
 
 .main { min-height: calc(100vh - 180px); padding: 24px 0 56px; }
@@ -238,8 +240,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	.delivery-button { width: 36px; height: 36px; justify-content: center; padding: 0; overflow: hidden; font-size: 0; }
 	.delivery-button svg { flex: 0 0 19px; }
 	.cart-button > span:first-of-type { display: none; }
-	.nav-inner { gap: 27px; min-height: 47px; overflow-x: auto; }
-	.nav-link { flex: 0 0 auto; font-size: 12px; }
+	.nav-inner { min-height: 47px; }
+	.nav-link { font-size: 12px; }
 	.main { padding-top: 16px; }
 	.hero { min-height: 0; grid-template-columns: 1fr; }
 	.hero-copy { min-height: 285px; padding: 30px; }
