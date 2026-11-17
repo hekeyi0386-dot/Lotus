@@ -14,25 +14,60 @@ const categories = [
 	{ id: "home", name: "Home & Decor" }
 ];
 
+const siteRoot = new URL(".", document.currentScript.src);
+const sitePath = siteRoot.pathname.replace(/\/$/, "");
+const theme = getComputedStyle(document.documentElement);
+const brandColors = {
+	forest: theme.getPropertyValue("--forest").trim(),
+	greenLight: theme.getPropertyValue("--green-light").trim(),
+	softGreen: theme.getPropertyValue("--soft-green").trim(),
+	orangeLight: theme.getPropertyValue("--orange-light").trim(),
+	softOrange: theme.getPropertyValue("--soft-orange").trim(),
+	cream: theme.getPropertyValue("--cream").trim(),
+	softCream: theme.getPropertyValue("--soft-cream").trim(),
+	paper: theme.getPropertyValue("--paper").trim()
+};
+
+function assetUrl(path) {
+	return new URL(path, siteRoot).pathname;
+}
+
+function routeUrl(route, params = new URLSearchParams()) {
+	const query = new URLSearchParams(params);
+	if (sitePath) {
+		query.delete("page");
+		if (route !== "home") query.set("page", route);
+		return `${sitePath}/${query.size ? `?${query}` : ""}`;
+	}
+	const path = route === "home" ? "/" : `/${route}`;
+	return `${path}${query.size ? `?${query}` : ""}`;
+}
+
+function routeParams() {
+	const params = new URLSearchParams(location.search);
+	params.delete("page");
+	return params;
+}
+
 const products = [
-	{ id: "ramyun", name: "Nongshim Shin Ramyun Noodle Soup", brand: "Nongshim", category: "ready", size: "4.2 oz (5-pack)", price: 6.99, original: 8.49, deal: "weekly", dietary: ["Vegetarian"], available: true, isNew: false, emoji: "🍜", palette: ["#ffe8d7", "#e9853a"] },
-	{ id: "bok-choy", name: "Fresh Bok Choy", brand: "Lotus Fresh", category: "produce", size: "1 lb", price: 2.49, original: 3.49, deal: "weekly", dietary: ["Vegan", "Gluten-free"], available: true, isNew: true, emoji: "🥬", palette: ["#e1efd5", "#9aba73"] },
-	{ id: "beef", name: "Sliced Beef for Hot Pot", brand: "Lotus Fresh", category: "meat", size: "12 oz", price: 8.99, original: 10.99, deal: "group", dietary: [], available: true, isNew: false, emoji: "🥩", palette: ["#f9e3df", "#d8847e"] },
-	{ id: "soy-sauce", name: "Kikkoman Soy Sauce", brand: "Kikkoman", category: "cooking", size: "15 fl oz", price: 4.99, original: 5.79, deal: "weekly", dietary: ["Vegan"], available: true, isNew: false, emoji: "🍶", palette: ["#eee7d7", "#b6874e"] },
-	{ id: "mochi", name: "Mochi Ice Cream Assorted Flavors", brand: "My/Mochi", category: "frozen", size: "6 ct", price: 5.99, original: 7.49, deal: "buy1", dietary: ["Vegetarian"], available: true, isNew: true, emoji: "🍡", palette: ["#f4e3ee", "#d3a6bc"] },
-	{ id: "salmon", name: "Atlantic Salmon Fillet", brand: "Lotus Fresh", category: "seafood", size: "1 lb", price: 12.99, original: 15.99, deal: "clearance", dietary: [], available: true, isNew: false, emoji: "🐟", palette: ["#f8e6d9", "#e99a71"] },
-	{ id: "dumplings", name: "Pork & Chive Dumplings", brand: "Bibigo", category: "frozen", size: "24 oz", price: 7.49, original: 9.99, deal: "group", dietary: [], available: true, isNew: false, emoji: "🥟", palette: ["#e2efe5", "#9db99b"] },
-	{ id: "milk-tea", name: "Assorted Milk Tea", brand: "Haitai", category: "tea", size: "6 × 8.45 fl oz", price: 2.99, original: 3.99, deal: "buy2", dietary: ["Vegetarian"], available: true, isNew: true, emoji: "🧋", palette: ["#f6ead3", "#d4ad71"] },
-	{ id: "kimchi", name: "Traditional Napa Cabbage Kimchi", brand: "Jongga", category: "ready", size: "17.6 oz", price: 6.49, original: 7.99, deal: "weekly", dietary: ["Vegan"], available: true, isNew: false, emoji: "🌶️", palette: ["#f7e1d7", "#dc7a51"] },
-	{ id: "jasmine-rice", name: "Jasmine Rice", brand: "Three Ladies", category: "grains", size: "5 lb", price: 9.99, original: 12.49, deal: "clearance", dietary: ["Vegan", "Gluten-free"], available: true, isNew: false, emoji: "🍚", palette: ["#eee9d9", "#c2af7e"] },
-	{ id: "chili-crisp", name: "Chili Crisp with Peanuts", brand: "Lao Gan Ma", category: "cooking", size: "7.41 oz", price: 4.59, original: 5.49, deal: "buy1", dietary: ["Vegan", "Gluten-free"], available: true, isNew: true, emoji: "🫙", palette: ["#f3e5d6", "#b97845"] },
-	{ id: "edamame", name: "Shelled Edamame", brand: "Lotus Kitchen", category: "frozen", size: "12 oz", price: 3.29, original: 4.29, deal: "buy2", dietary: ["Vegan", "Gluten-free"], available: false, isNew: false, emoji: "🫛", palette: ["#e3efd9", "#9abb7b"] },
-	{ id: "green-tea", name: "Jasmine Green Tea", brand: "Ito En", category: "tea", size: "16.9 fl oz · 4-pack", price: 5.49, original: 6.99, deal: "weekly", dietary: ["Vegan", "Gluten-free"], available: true, isNew: false, emoji: "🍵", palette: ["#e7efdc", "#adc391"] },
-	{ id: "rice-crackers", name: "Seaweed Rice Crackers", brand: "Want Want", category: "snacks", size: "7 oz", price: 3.79, original: 4.99, deal: "group", dietary: ["Vegetarian"], available: true, isNew: true, emoji: "🍘", palette: ["#efe8d5", "#c7ae70"] },
-	{ id: "mango", name: "Sweet Yellow Mango", brand: "Lotus Fresh", category: "produce", size: "Each", price: 2.49, original: 3.29, deal: "weekly", dietary: ["Vegan", "Gluten-free"], available: true, isNew: true, emoji: "🥭", palette: ["#f8edc8", "#e5bf53"] },
-	{ id: "sheet-mask", name: "Green Tea Hydrating Sheet Masks", brand: "Beauty of Joseon", category: "beauty", size: "5 masks", price: 11.99, original: 15.99, deal: "weekly", dietary: [], available: true, isNew: false, emoji: "🧴", palette: ["#e3eee5", "#84ad8a"] },
-	{ id: "sesame-oil", name: "Roasted Sesame Oil", brand: "Kadoya", category: "cooking", size: "5.5 fl oz", price: 6.29, original: 7.49, deal: "clearance", dietary: ["Vegan", "Gluten-free"], available: true, isNew: false, emoji: "🫗", palette: ["#eee5d3", "#c39b59"] },
-	{ id: "fish-balls", name: "Taiwanese Hot Pot Fish Balls", brand: "Taisun", category: "frozen", size: "10.5 oz", price: 5.99, original: 7.49, deal: "buy1", dietary: [], available: true, isNew: true, emoji: "🍢", palette: ["#f0e9d8", "#bea975"] }
+	{ id: "ramyun", name: "Nongshim Shin Ramyun Noodle Soup", brand: "Nongshim", category: "ready", size: "4.2 oz (5-pack)", price: 6.99, original: 8.49, deal: "weekly", dietary: ["Vegetarian"], available: true, isNew: false, emoji: "🍜", palette: [brandColors.softOrange, brandColors.orangeLight] },
+	{ id: "bok-choy", name: "Fresh Bok Choy", brand: "Lotus Fresh", category: "produce", size: "1 lb", price: 2.49, original: 3.49, deal: "weekly", dietary: ["Vegan", "Gluten-free"], available: true, isNew: true, emoji: "🥬", palette: [brandColors.softGreen, brandColors.greenLight] },
+	{ id: "beef", name: "Sliced Beef for Hot Pot", brand: "Lotus Fresh", category: "meat", size: "12 oz", price: 8.99, original: 10.99, deal: "group", dietary: [], available: true, isNew: false, emoji: "🥩", palette: [brandColors.softOrange, brandColors.orangeLight] },
+	{ id: "soy-sauce", name: "Kikkoman Soy Sauce", brand: "Kikkoman", category: "cooking", size: "15 fl oz", price: 4.99, original: 5.79, deal: "weekly", dietary: ["Vegan"], available: true, isNew: false, emoji: "🍶", palette: [brandColors.cream, brandColors.softCream] },
+	{ id: "mochi", name: "Mochi Ice Cream Assorted Flavors", brand: "My/Mochi", category: "frozen", size: "6 ct", price: 5.99, original: 7.49, deal: "buy1", dietary: ["Vegetarian"], available: true, isNew: true, emoji: "🍡", palette: [brandColors.softOrange, brandColors.orangeLight] },
+	{ id: "salmon", name: "Atlantic Salmon Fillet", brand: "Lotus Fresh", category: "seafood", size: "1 lb", price: 12.99, original: 15.99, deal: "clearance", dietary: [], available: true, isNew: false, emoji: "🐟", palette: [brandColors.softOrange, brandColors.orangeLight] },
+	{ id: "dumplings", name: "Pork & Chive Dumplings", brand: "Bibigo", category: "frozen", size: "24 oz", price: 7.49, original: 9.99, deal: "group", dietary: [], available: true, isNew: false, emoji: "🥟", palette: [brandColors.softGreen, brandColors.greenLight] },
+	{ id: "milk-tea", name: "Assorted Milk Tea", brand: "Haitai", category: "tea", size: "6 × 8.45 fl oz", price: 2.99, original: 3.99, deal: "buy2", dietary: ["Vegetarian"], available: true, isNew: true, emoji: "🧋", palette: [brandColors.cream, brandColors.softCream] },
+	{ id: "kimchi", name: "Traditional Napa Cabbage Kimchi", brand: "Jongga", category: "ready", size: "17.6 oz", price: 6.49, original: 7.99, deal: "weekly", dietary: ["Vegan"], available: true, isNew: false, emoji: "🌶️", palette: [brandColors.softOrange, brandColors.orangeLight] },
+	{ id: "jasmine-rice", name: "Jasmine Rice", brand: "Three Ladies", category: "grains", size: "5 lb", price: 9.99, original: 12.49, deal: "clearance", dietary: ["Vegan", "Gluten-free"], available: true, isNew: false, emoji: "🍚", palette: [brandColors.cream, brandColors.softCream] },
+	{ id: "chili-crisp", name: "Chili Crisp with Peanuts", brand: "Lao Gan Ma", category: "cooking", size: "7.41 oz", price: 4.59, original: 5.49, deal: "buy1", dietary: ["Vegan", "Gluten-free"], available: true, isNew: true, emoji: "🫙", palette: [brandColors.softOrange, brandColors.orangeLight] },
+	{ id: "edamame", name: "Shelled Edamame", brand: "Lotus Kitchen", category: "frozen", size: "12 oz", price: 3.29, original: 4.29, deal: "buy2", dietary: ["Vegan", "Gluten-free"], available: false, isNew: false, emoji: "🫛", palette: [brandColors.softGreen, brandColors.greenLight] },
+	{ id: "green-tea", name: "Jasmine Green Tea", brand: "Ito En", category: "tea", size: "16.9 fl oz · 4-pack", price: 5.49, original: 6.99, deal: "weekly", dietary: ["Vegan", "Gluten-free"], available: true, isNew: false, emoji: "🍵", palette: [brandColors.softGreen, brandColors.greenLight] },
+	{ id: "rice-crackers", name: "Seaweed Rice Crackers", brand: "Want Want", category: "snacks", size: "7 oz", price: 3.79, original: 4.99, deal: "group", dietary: ["Vegetarian"], available: true, isNew: true, emoji: "🍘", palette: [brandColors.cream, brandColors.softCream] },
+	{ id: "mango", name: "Sweet Yellow Mango", brand: "Lotus Fresh", category: "produce", size: "Each", price: 2.49, original: 3.29, deal: "weekly", dietary: ["Vegan", "Gluten-free"], available: true, isNew: true, emoji: "🥭", palette: [brandColors.softOrange, brandColors.orangeLight] },
+	{ id: "sheet-mask", name: "Green Tea Hydrating Sheet Masks", brand: "Beauty of Joseon", category: "beauty", size: "5 masks", price: 11.99, original: 15.99, deal: "weekly", dietary: [], available: true, isNew: false, emoji: "🧴", palette: [brandColors.softGreen, brandColors.greenLight] },
+	{ id: "sesame-oil", name: "Roasted Sesame Oil", brand: "Kadoya", category: "cooking", size: "5.5 fl oz", price: 6.29, original: 7.49, deal: "clearance", dietary: ["Vegan", "Gluten-free"], available: true, isNew: false, emoji: "🫗", palette: [brandColors.cream, brandColors.softCream] },
+	{ id: "fish-balls", name: "Taiwanese Hot Pot Fish Balls", brand: "Taisun", category: "frozen", size: "10.5 oz", price: 5.99, original: 7.49, deal: "buy1", dietary: [], available: true, isNew: true, emoji: "🍢", palette: [brandColors.softGreen, brandColors.greenLight] }
 ];
 
 const deals = [
@@ -79,16 +114,16 @@ function escapeXml(text) {
 	return String(text).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[char]);
 }
 
-function illustration(label, emoji, colors = ["#edf3e8", "#c8d9bf"]) {
+function illustration(label, emoji, colors = [brandColors.softGreen, brandColors.greenLight]) {
 	const safeLabel = escapeXml(label.length > 25 ? `${label.slice(0, 22)}...` : label);
-	const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420"><defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="${colors[0]}"/><stop offset="1" stop-color="${colors[1]}"/></linearGradient></defs><rect width="600" height="420" fill="url(#bg)"/><circle cx="492" cy="86" r="98" fill="#fff" opacity=".22"/><circle cx="86" cy="372" r="122" fill="#fff" opacity=".18"/><path d="M0 315c104-72 199 36 311-20s192-6 289-69v194H0Z" fill="#fff" opacity=".2"/><text x="300" y="235" text-anchor="middle" font-size="150" font-family="Apple Color Emoji,Segoe UI Emoji,sans-serif">${emoji}</text><text x="300" y="375" text-anchor="middle" font-size="20" font-weight="700" letter-spacing="2" fill="#284932" font-family="Arial,sans-serif">${safeLabel}</text><text x="300" y="399" text-anchor="middle" font-size="11" fill="#49624d" font-family="Arial,sans-serif">REPLACEABLE IMAGE</text></svg>`;
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420"><defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="${colors[0]}"/><stop offset="1" stop-color="${colors[1]}"/></linearGradient></defs><rect width="600" height="420" fill="url(#bg)"/><circle cx="492" cy="86" r="98" fill="${brandColors.paper}" opacity=".22"/><circle cx="86" cy="372" r="122" fill="${brandColors.paper}" opacity=".18"/><path d="M0 315c104-72 199 36 311-20s192-6 289-69v194H0Z" fill="${brandColors.paper}" opacity=".2"/><text x="300" y="235" text-anchor="middle" font-size="150" font-family="Apple Color Emoji,Segoe UI Emoji,sans-serif">${emoji}</text><text x="300" y="375" text-anchor="middle" font-size="20" font-weight="700" letter-spacing="2" fill="${brandColors.forest}" font-family="Arial,sans-serif">${safeLabel}</text><text x="300" y="399" text-anchor="middle" font-size="11" fill="${brandColors.forest}" font-family="Arial,sans-serif">REPLACEABLE IMAGE</text></svg>`;
 	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
 const heroImages = [
-	illustration("Fresh market", "🥬🥕🍊", ["#dcebd0", "#91b678"]),
-	illustration("Neighborhood favorites", "🍜🥟🍵", ["#f5e6cf", "#b5cb9a"]),
-	illustration("Seasonal produce", "🥭🍇🥬", ["#e3efd8", "#d2bb7a"])
+	illustration("Fresh market", "🥬🥕🍊", [brandColors.softGreen, brandColors.greenLight]),
+	illustration("Neighborhood favorites", "🍜🥟🍵", [brandColors.cream, brandColors.softCream]),
+	illustration("Seasonal produce", "🥭🍇🥬", [brandColors.softGreen, brandColors.greenLight])
 ];
 
 const heroSlides = [
@@ -127,7 +162,7 @@ function header(activeRoute) {
 			</div>
 		</div></div>
 		<header class="main-header"><div class="header-inner site-width">
-			<a class="brand" href="/" data-route aria-label="Lotus Food home"><span class="brand-main"><span class="brand-mark" aria-hidden="true">L</span><span class="brand-name">Lotus Food</span></span><span class="brand-subtitle">ASIAN GROCERY</span></a>
+			<a class="brand" href="${routeUrl("home")}" data-route aria-label="Lotus Food home"><img class="brand-logo" src="${assetUrl("logolotus.png")}" alt="Lotus Food Asian grocery, Since 1989"></a>
 			<div class="header-tools">
 				<form class="search-form" id="site-search" role="search"><input name="q" type="search" placeholder="Search for products, noodles, snacks..." aria-label="Search products"><button aria-label="Search">${icon("search")}</button></form>
 				<div class="header-actions">
@@ -138,9 +173,9 @@ function header(activeRoute) {
 			</div>
 		</div></header>
 		<nav class="primary-nav" aria-label="Primary navigation"><div class="nav-inner site-width">
-			<a class="nav-link" href="/" data-route${current("home")}>Home</a>
-			<a class="nav-link" href="/shop" data-route${current("shop")}>Shop</a>
-			<a class="nav-link" href="/deals" data-route${current("deals")}>Deals</a>
+			<a class="nav-link" href="${routeUrl("home")}" data-route${current("home")}>Home</a>
+			<a class="nav-link" href="${routeUrl("shop")}" data-route${current("shop")}>Shop</a>
+			<a class="nav-link" href="${routeUrl("deals")}" data-route${current("deals")}>Deals</a>
 			<a class="nav-link restaurant-link" href="#restaurant-orders" data-dialog="restaurant">Restaurant Orders ${icon("arrow")}</a>
 		</div></nav>`;
 }
@@ -148,7 +183,7 @@ function header(activeRoute) {
 function heroMarkup(index = 0) {
 	const slide = heroSlides[index];
 	return `<section class="hero" aria-label="Featured promotion" data-hero-slide="${index}">
-		<div class="hero-copy"><span class="hero-eyebrow">${slide.eyebrow}</span><h1>${slide.title}</h1><p class="hero-description">${slide.copy}</p><a class="button-primary" href="${slide.new ? "/shop?collection=new" : "/shop"}" data-route>${slide.button} ${icon("arrow")}</a></div>
+		<div class="hero-copy"><span class="hero-eyebrow">${slide.eyebrow}</span><h1>${slide.title}</h1><p class="hero-description">${slide.copy}</p><a class="button-primary" href="${routeUrl("shop", new URLSearchParams(slide.new ? "collection=new" : ""))}" data-route>${slide.button} ${icon("arrow")}</a></div>
 		<div class="hero-media"><img src="${slide.image}" alt="Fresh Asian grocery image placeholder"></div>
 		<div class="hero-controls"><button class="hero-arrow" type="button" aria-label="Previous slide" data-hero="prev">‹</button><div class="hero-dots">${heroSlides.map((_, dot) => `<button class="hero-dot" type="button" aria-label="Slide ${dot + 1}" aria-current="${index === dot}" data-hero="${dot}"></button>`).join("")}</div><button class="hero-arrow" type="button" aria-label="Next slide" data-hero="next">›</button></div>
 	</section>`;
@@ -156,21 +191,21 @@ function heroMarkup(index = 0) {
 
 function homePage() {
 	const promotions = [
-		{ title: "Beauty Deals", copy: "Skincare, makeup & more", tag: "Weekly offer", deal: "weekly", category: "beauty", emoji: "🧴", palette: ["#e5efe4", "#a4c295"] },
-		{ title: "Group Buy", copy: "Buy together and save more", tag: "Better together", deal: "group", emoji: "🥟", palette: ["#f7e2cc", "#dc9860"] },
-		{ title: "Clearance", copy: "Limited-time discounts", tag: "While supplies last", deal: "clearance", emoji: "🏷️", palette: ["#e0edd8", "#96b981"] },
-		{ title: "Buy 1 Get 2", copy: "More favorites for less", tag: "Multi-buy deal", deal: "buy1", emoji: "🍜", palette: ["#f9e4d7", "#dc9a73"] }
+		{ title: "Beauty Deals", copy: "Skincare, makeup & more", tag: "Weekly offer", deal: "weekly", category: "beauty", emoji: "🧴", palette: [brandColors.softGreen, brandColors.greenLight] },
+		{ title: "Group Buy", copy: "Buy together and save more", tag: "Better together", deal: "group", emoji: "🥟", palette: [brandColors.softOrange, brandColors.orangeLight] },
+		{ title: "Clearance", copy: "Limited-time discounts", tag: "While supplies last", deal: "clearance", emoji: "🏷️", palette: [brandColors.softGreen, brandColors.greenLight] },
+		{ title: "Buy 1 Get 2", copy: "More favorites for less", tag: "Multi-buy deal", deal: "buy1", emoji: "🍜", palette: [brandColors.softOrange, brandColors.orangeLight] }
 	];
 	return `<main class="main site-width" data-page="home">
 		${heroMarkup()}
 		<section class="quick-strip" aria-label="Quick links">
 			<a class="quick-link" href="#delivery" data-dialog="delivery"><span class="quick-icon">${icon("truck")}</span><span class="quick-copy"><strong>Local Delivery</strong><span>Convenient &amp; reliable</span></span></a>
-			<a class="quick-link" href="/deals?deal=weekly" data-route><span class="quick-icon">${icon("tag")}</span><span class="quick-copy"><strong>Weekly Deals</strong><span>Save on neighborhood favorites</span></span></a>
-			<a class="quick-link" href="/shop?collection=new" data-route><span class="quick-icon">${icon("star")}</span><span class="quick-copy"><strong>New Arrivals</strong><span>Discover what's new</span></span></a>
+			<a class="quick-link" href="${routeUrl("deals", new URLSearchParams("deal=weekly"))}" data-route><span class="quick-icon">${icon("tag")}</span><span class="quick-copy"><strong>Weekly Deals</strong><span>Save on neighborhood favorites</span></span></a>
+			<a class="quick-link" href="${routeUrl("shop", new URLSearchParams("collection=new"))}" data-route><span class="quick-icon">${icon("star")}</span><span class="quick-copy"><strong>New Arrivals</strong><span>Discover what's new</span></span></a>
 			<a class="quick-link" href="#restaurant-orders" data-dialog="restaurant"><span class="quick-icon">${icon("bowl")}</span><span class="quick-copy"><strong>Restaurant Orders</strong><span>Order from our kitchen</span></span></a>
 		</section>
-		<section aria-labelledby="promotion-title"><div class="section-heading"><div><h2 id="promotion-title">Deals &amp; Promotions</h2><p>Fresh picks and good finds, updated weekly.</p></div><a class="text-link" href="/deals" data-route>View All Deals ${icon("arrow")}</a></div>
-			<div class="promotion-grid">${promotions.map((promo) => `<a class="promotion-card" href="/deals?deal=${promo.deal}${promo.category ? `&category=${promo.category}` : ""}" data-route><img src="${illustration(promo.title, promo.emoji, promo.palette)}" alt="${promo.title} image placeholder"><span class="promotion-copy"><small>${promo.tag}</small><h3>${promo.title}</h3><p>${promo.copy}</p></span></a>`).join("")}</div>
+		<section aria-labelledby="promotion-title"><div class="section-heading"><div><h2 id="promotion-title">Deals &amp; Promotions</h2><p>Fresh picks and good finds, updated weekly.</p></div><a class="text-link" href="${routeUrl("deals")}" data-route>View All Deals ${icon("arrow")}</a></div>
+			<div class="promotion-grid">${promotions.map((promo) => `<a class="promotion-card" href="${routeUrl("deals", new URLSearchParams(`deal=${promo.deal}${promo.category ? `&category=${promo.category}` : ""}`))}" data-route><img src="${illustration(promo.title, promo.emoji, promo.palette)}" alt="${promo.title} image placeholder"><span class="promotion-copy"><small>${promo.tag}</small><h3>${promo.title}</h3><p>${promo.copy}</p></span></a>`).join("")}</div>
 		</section>
 	</main>`;
 }
@@ -201,7 +236,7 @@ function productFilters(params, isDeals = false) {
 function shopPage(params) {
 	const activeCategory = params.get("category") || "all";
 	const collection = params.get("collection") || "all";
-	return `<main class="main site-width" data-page="shop"><div class="page-intro"><div><div class="breadcrumbs"><a href="/" data-route>Home</a><span>›</span><span>Shop</span></div><h1>All Products</h1><p>Everyday Asian groceries and neighborhood favorites, all in one place.</p></div><span class="product-count" id="product-count"></span></div>
+	return `<main class="main site-width" data-page="shop"><div class="page-intro"><div><div class="breadcrumbs"><a href="${routeUrl("home")}" data-route>Home</a><span>›</span><span>Shop</span></div><h1>All Products</h1><p>Everyday Asian groceries and neighborhood favorites, all in one place.</p></div><span class="product-count" id="product-count"></span></div>
 		<div class="shop-layout">${shopSidebar(activeCategory)}<section class="catalog-panel" aria-label="Product catalog"><div class="catalog-heading"><div><button class="collection-chip" type="button" data-collection aria-pressed="${collection === "new"}">${icon("star")} New Arrivals</button></div><label class="catalog-sort">Sort by <select class="filter-select" data-filter="sort" aria-label="Sort products"><option value="featured" ${params.get("sort") === "featured" ? "selected" : ""}>Featured</option><option value="price-low" ${params.get("sort") === "price-low" ? "selected" : ""}>Price: Low to High</option><option value="price-high" ${params.get("sort") === "price-high" ? "selected" : ""}>Price: High to Low</option><option value="name" ${params.get("sort") === "name" ? "selected" : ""}>Name</option></select></label></div>
 			${productFilters(params)}<div class="product-grid" id="product-grid"></div><div class="load-more-row" id="load-more-row"></div></section></div></main>`;
 }
@@ -216,7 +251,7 @@ function dealsPage(params) {
 	const focusedCategory = params.get("category") || "all";
 	return `<main class="main site-width" data-page="deals"><header class="deals-intro"><h1>Deals &amp; Promotions</h1><p>Save more on your favorite Asian groceries.</p></header>
 		${dealTabs(activeDeal)}
-		<section class="deal-hero" aria-label="Featured deal"><img src="${illustration(deal.heading, activeDeal === "buy1" || activeDeal === "buy2" ? "🍜🥟" : "🥬🍲", ["#386d40", "#a4bb72"])}" alt="Asian grocery promotion image placeholder"><div class="deal-hero-copy"><h2>${deal.heading}</h2><p>${deal.copy}</p><a class="button-primary" href="#deal-products" data-scroll="deal-products">${deal.cta} ${icon("arrow")}</a></div></section>
+		<section class="deal-hero" aria-label="Featured deal"><img src="${illustration(deal.heading, activeDeal === "buy1" || activeDeal === "buy2" ? "🍜🥟" : "🥬🍲", [brandColors.green, brandColors.greenLight])}" alt="Asian grocery promotion image placeholder"><div class="deal-hero-copy"><h2>${deal.heading}</h2><p>${deal.copy}</p><a class="button-primary" href="#deal-products" data-scroll="deal-products">${deal.cta} ${icon("arrow")}</a></div></section>
 		<div class="deal-toolbar"><div>${productFilters(params, true)}</div><span class="discount-note">${icon("tag")} Sale prices shown while supplies last</span></div>
 		<section id="deal-products" aria-label="Discounted products"><div class="catalog-heading"><div><h2>${deal.label}</h2><span class="product-count" id="product-count"></span></div><label class="catalog-sort">Sort by <select class="filter-select" data-filter="sort" aria-label="Sort deals"><option value="savings" ${params.get("sort") === "savings" || !params.get("sort") ? "selected" : ""}>Biggest Savings</option><option value="price-low" ${params.get("sort") === "price-low" ? "selected" : ""}>Price: Low to High</option><option value="price-high" ${params.get("sort") === "price-high" ? "selected" : ""}>Price: High to Low</option></select></label></div><div class="product-grid" id="product-grid"></div><div class="load-more-row" id="load-more-row"></div></section>
 	</main>`;
@@ -254,7 +289,7 @@ function filteredProducts(params, route) {
 function renderCatalog() {
 	const main = app.querySelector("[data-page='shop'], [data-page='deals']");
 	if (!main) return;
-	const params = new URLSearchParams(location.search);
+	const params = routeParams();
 	const route = main.dataset.page;
 	const result = filteredProducts(params, route);
 	const grid = main.querySelector("#product-grid");
@@ -312,6 +347,8 @@ function navigate(url, { scroll = true } = {}) {
 }
 
 function routeName() {
+	const page = new URLSearchParams(location.search).get("page");
+	if (page === "shop" || page === "deals") return page;
 	if (location.pathname.replace(/\/$/, "") === "/shop") return "shop";
 	if (location.pathname.replace(/\/$/, "") === "/deals") return "deals";
 	return "home";
@@ -319,7 +356,7 @@ function routeName() {
 
 function render() {
 	const route = routeName();
-	const params = new URLSearchParams(location.search);
+	const params = routeParams();
 	const page = route === "shop" ? shopPage(params) : route === "deals" ? dealsPage(params) : homePage();
 	app.innerHTML = `${header(route)}${page}<div class="toast" role="status" hidden></div>`;
 	document.title = route === "shop" ? "Shop Asian Groceries | Lotus Food" : route === "deals" ? "Deals & Promotions | Lotus Food" : "Lotus Food | Asian Grocery in Pittsburgh";
@@ -345,19 +382,19 @@ app.addEventListener("click", (event) => {
 	}
 	const categoryButton = event.target.closest("[data-category]");
 	if (categoryButton) {
-		const params = new URLSearchParams(location.search);
+		const params = routeParams();
 		if (categoryButton.dataset.category === "all") params.delete("category");
 		else params.set("category", categoryButton.dataset.category);
 		params.delete("collection");
-		navigate(`/shop${params.size ? `?${params}` : ""}`, { scroll: false });
+		navigate(routeUrl("shop", params), { scroll: false });
 		return;
 	}
 	const dealButton = event.target.closest("[data-deal]");
 	if (dealButton) {
-		const params = new URLSearchParams(location.search);
+		const params = routeParams();
 		params.set("deal", dealButton.dataset.deal);
 		params.delete("category");
-		navigate(`/deals?${params}`);
+		navigate(routeUrl("deals", params));
 		return;
 	}
 	const heroAction = event.target.closest("[data-hero]");
@@ -370,7 +407,7 @@ app.addEventListener("click", (event) => {
 		hero.querySelector(".hero-eyebrow").textContent = slide.eyebrow;
 		hero.querySelector("h1").textContent = slide.title;
 		hero.querySelector(".hero-description").textContent = slide.copy;
-		hero.querySelector(".button-primary").href = slide.new ? "/shop?collection=new" : "/shop";
+		hero.querySelector(".button-primary").href = routeUrl("shop", new URLSearchParams(slide.new ? "collection=new" : ""));
 		hero.querySelector(".button-primary").textContent = `${slide.button} →`;
 		hero.querySelector(".hero-media img").src = slide.image;
 		hero.querySelectorAll(".hero-dot").forEach((dot, index) => dot.setAttribute("aria-current", String(index === next)));
@@ -399,10 +436,10 @@ app.addEventListener("click", (event) => {
 		return;
 	}
 	if (event.target.closest("[data-collection]")) {
-		const params = new URLSearchParams(location.search);
+		const params = routeParams();
 		if (params.get("collection") === "new") params.delete("collection");
 		else params.set("collection", "new");
-		navigate(`/shop${params.size ? `?${params}` : ""}`, { scroll: false });
+		navigate(routeUrl("shop", params), { scroll: false });
 		return;
 	}
 	if (event.target.closest("[data-load-more]")) {
@@ -422,14 +459,14 @@ app.addEventListener("click", (event) => {
 
 app.addEventListener("change", (event) => {
 	if (event.target.matches("[data-filter]")) {
-		const params = new URLSearchParams(location.search);
+		const params = routeParams();
 		const key = event.target.dataset.filter;
 		if (event.target.value === "all" || (key === "sort" && event.target.value === "featured")) params.delete(key);
 		else params.set(key, event.target.value);
 		params.delete("page");
 		visibleCount = 8;
 		const focusKey = key;
-		navigate(`${location.pathname}?${params}`, { scroll: false });
+		navigate(routeUrl(routeName(), params), { scroll: false });
 		app.querySelector(`[data-filter="${focusKey}"]`)?.focus();
 	}
 });
@@ -438,7 +475,7 @@ app.addEventListener("submit", (event) => {
 	if (event.target.id !== "site-search") return;
 	event.preventDefault();
 	const query = new FormData(event.target).get("q").trim();
-	navigate(`/shop${query ? `?search=${encodeURIComponent(query)}` : ""}`);
+	navigate(routeUrl("shop", new URLSearchParams(query ? `search=${encodeURIComponent(query)}` : "")));
 });
 
 app.addEventListener("keydown", (event) => {

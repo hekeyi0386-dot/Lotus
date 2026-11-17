@@ -4,15 +4,20 @@ const path = require("node:path");
 
 const root = __dirname;
 const port = Number(process.env.PORT || 4173);
+const basePath = (process.env.BASE_PATH || "").replace(/\/+$/, "");
 const contentTypes = {
 	".html": "text/html; charset=utf-8",
 	".css": "text/css; charset=utf-8",
 	".js": "text/javascript; charset=utf-8",
+	".png": "image/png",
 	".svg": "image/svg+xml"
 };
 
 http.createServer((request, response) => {
-	const pathname = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
+	const requestPath = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
+	const pathname = basePath && (requestPath === basePath || requestPath.startsWith(`${basePath}/`))
+		? requestPath.slice(basePath.length) || "/"
+		: requestPath;
 	const requestedFile = path.resolve(root, `.${pathname}`);
 	const route = pathname === "/" || pathname === "/shop" || pathname === "/deals";
 	if (!route && !requestedFile.startsWith(`${root}${path.sep}`)) {
