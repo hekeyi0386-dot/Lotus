@@ -72,6 +72,7 @@ const cart = new Map(JSON.parse(localStorage.getItem("lotus-cart") || "[]"));
 const wishlist = new Set(JSON.parse(localStorage.getItem("lotus-wishlist") || "[]"));
 let visibleCount = 8;
 let toastTimer;
+let heroAutoplayTimer;
 
 function icon(name) {
 	const paths = {
@@ -140,9 +141,20 @@ function header(activeRoute) {
 }
 
 function heroMarkup() {
-	const mapSearch = "https://www.google.com/maps/search/?api=1&query=Lotus+Food+Company%2C+Pittsburgh%2C+PA";
-	return `<section class="hero hero-editorial" aria-labelledby="hero-title">
-		<img class="hero-photo" src="${assetUrl("Top-6-Asian-Pantry-Essential-Sauces.webp")}" alt="Six Chinese pantry sauces and cooking condiments">
+	const slides = [
+		{ image: "Top-6-Asian-Pantry-Essential-Sauces.webp", alt: "Six Chinese pantry sauces and cooking condiments", headline: "Taste Asia in One Stop", cta: "Explore the Aisles", position: "center 54%" },
+		{ image: "group_shot_all.webp", alt: "A colorful selection of Asian grocery favorites", headline: "Everything for Your Table.", cta: "Discover Your Favorites", position: "center 50%" },
+		{ image: "hero3.png", alt: "Shelves of Asian grocery products at Lotus Food", headline: "Pittsburgh's First Asian Grocery", cta: "Explore Our Selection", position: "center 52%" }
+	];
+	return `<section class="hero hero-editorial" aria-label="Featured at Lotus Food" aria-roledescription="carousel" data-hero-carousel data-active-slide="0">
+		<div class="hero-slides">${slides.map((slide, index) => `<article class="hero-slide${index === 0 ? " is-active" : ""}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${slides.length}" aria-hidden="${index !== 0}" ${index !== 0 ? "inert" : ""}>
+			<img class="hero-photo" src="${assetUrl(slide.image)}" alt="${slide.alt}" style="object-position: ${slide.position}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>
+			<div class="hero-copy">
+				<h1${index === 0 ? ' id="hero-title"' : ""}>${slide.headline}</h1>
+				<p class="hero-description">Explore Chinese pantry staples and everyday favorites.</p>
+				<a class="button-primary" href="${routeUrl("shop")}" data-route>${slide.cta} <span aria-hidden="true">→</span></a>
+			</div>
+		</article>`).join("")}</div>
 		<div class="hero-overlay" aria-hidden="true"></div>
 		<div class="hero-art" aria-hidden="true">
 			<img class="hero-lantern lantern-two" src="${assetUrl("Lantern2.png")}" alt="">
@@ -151,17 +163,37 @@ function heroMarkup() {
 			<img class="hero-cloud cloud-two" src="${assetUrl("Cloud.png")}" alt="">
 			<img class="hero-cloud cloud-three" src="${assetUrl("Cloud.png")}" alt="">
 		</div>
-		<div class="hero-copy">
-			<p class="hero-brand">LOTUS FOOD <span aria-hidden="true">·</span> PITTSBURGH</p>
-			<p class="hero-chinese" lang="zh-Hans">百合超市</p>
-			<h1 id="hero-title">Chinese flavors,<br>close to home.</h1>
-			<p class="hero-description">Explore Chinese pantry staples and everyday favorites.</p>
-			<div class="hero-actions">
-				<a class="button-primary" href="${routeUrl("shop")}" data-route>Shop groceries <span aria-hidden="true">→</span></a>
-				<a class="hero-visit-link" href="${mapSearch}" target="_blank" rel="noopener noreferrer">Plan your visit</a>
-			</div>
+		<div class="hero-controls" aria-label="Hero carousel controls">
+			<button class="hero-arrow" type="button" data-hero-direction="previous" aria-label="Previous slide">${icon("arrow")}</button>
+			<div class="hero-dots">${slides.map((_, index) => `<button class="hero-dot" type="button" data-hero-slide="${index}" aria-label="Show slide ${index + 1}" aria-current="${index === 0}"></button>`).join("")}</div>
+			<button class="hero-arrow hero-arrow-next" type="button" data-hero-direction="next" aria-label="Next slide">${icon("arrow")}</button>
 		</div>
 	</section>`;
+}
+
+function setHeroSlide(carousel, index) {
+	const slides = [...carousel.querySelectorAll(".hero-slide")];
+	const activeIndex = (index + slides.length) % slides.length;
+	carousel.dataset.activeSlide = activeIndex;
+	slides.forEach((slide, slideIndex) => {
+		const isActive = slideIndex === activeIndex;
+		slide.classList.toggle("is-active", isActive);
+		slide.setAttribute("aria-hidden", String(!isActive));
+		slide.inert = !isActive;
+	});
+	carousel.querySelectorAll("[data-hero-slide]").forEach((dot, dotIndex) => {
+		dot.setAttribute("aria-current", String(dotIndex === activeIndex));
+	});
+}
+
+function setupHeroCarousel() {
+	window.clearInterval(heroAutoplayTimer);
+	const carousel = app.querySelector("[data-hero-carousel]");
+	if (!carousel) return;
+	heroAutoplayTimer = window.setInterval(() => {
+		if (carousel.matches(":hover") || carousel.contains(document.activeElement)) return;
+		setHeroSlide(carousel, Number(carousel.dataset.activeSlide) + 1);
+	}, 6000);
 }
 
 function homePage() {
@@ -325,6 +357,7 @@ function render() {
 	const params = routeParams();
 	const page = route === "shop" ? shopPage(params) : route === "deals" ? dealsPage(params) : homePage();
 	app.innerHTML = `${header(route)}${page}<div class="toast" role="status" hidden></div>`;
+	setupHeroCarousel();
 	document.title = route === "shop" ? "Shop Asian Groceries | Lotus Food" : route === "deals" ? "Deals & Promotions | Lotus Food" : "Lotus Food | Asian Grocery in Pittsburgh";
 	if (route === "shop" || route === "deals") renderCatalog();
 	if (params.has("search") && route === "shop") {
@@ -334,6 +367,16 @@ function render() {
 }
 
 app.addEventListener("click", (event) => {
+	const heroControl = event.target.closest("[data-hero-slide], [data-hero-direction]");
+	if (heroControl) {
+		const carousel = heroControl.closest("[data-hero-carousel]");
+		const current = Number(carousel.dataset.activeSlide);
+		const next = heroControl.hasAttribute("data-hero-slide")
+			? Number(heroControl.dataset.heroSlide)
+			: current + (heroControl.dataset.heroDirection === "next" ? 1 : -1);
+		setHeroSlide(carousel, next);
+		return;
+	}
 	const routeLink = event.target.closest("a[data-route]");
 	if (routeLink) {
 		event.preventDefault();
@@ -429,6 +472,12 @@ app.addEventListener("submit", (event) => {
 });
 
 app.addEventListener("keydown", (event) => {
+	const carousel = event.target.closest("[data-hero-carousel]");
+	if (carousel && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+		event.preventDefault();
+		setHeroSlide(carousel, Number(carousel.dataset.activeSlide) + (event.key === "ArrowRight" ? 1 : -1));
+		return;
+	}
 	if (event.key === "Escape") app.querySelector(".dialog-backdrop")?.remove();
 });
 
