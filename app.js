@@ -83,6 +83,7 @@ function icon(name) {
 		cart: '<path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>',
 		arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
 		clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+		phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/>',
 		star: '<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/>',
 		leaf: '<path d="M20 4c-9 0-15 3.7-15 10a6 6 0 0 0 6 6c6.3 0 9-7 9-16Z"/><path d="M5 19c3-4 6-6 11-9"/>',
 		bowl: '<path d="M3 12h18a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8Z"/><path d="M6 8c0-1 .8-1.5.8-2.5M12 8c0-1 .8-1.5.8-2.5M18 8c0-1 .8-1.5.8-2.5"/>',
@@ -115,7 +116,10 @@ function saveWishlist() {
 }
 
 function header(activeRoute) {
-	const current = (route) => activeRoute === route ? ' aria-current="page"' : "";
+	const atVisit = activeRoute === "home" && location.hash === "#visit-us";
+	const current = (route) => activeRoute === route && !(route === "home" && atVisit) ? ' aria-current="page"' : "";
+	const visitCurrent = atVisit ? ' aria-current="location"' : "";
+	const visitUrl = `${routeUrl("home")}#visit-us`;
 	return `
 		<div class="utility-bar"><div class="utility-inner site-width">
 			<div class="utility-location"><select class="language-select" aria-label="Language"><option selected>English</option></select><a class="utility-link" href="#location">${icon("pin")} Pittsburgh, PA ${icon("chevron")}</a></div>
@@ -137,6 +141,8 @@ function header(activeRoute) {
 			<a class="nav-link" href="${routeUrl("shop")}" data-route${current("shop")}><span>Shop</span></a>
 			<a class="nav-link" href="${routeUrl("deals")}" data-route${current("deals")}><span>Deals</span></a>
 			<a class="nav-link restaurant-link" href="#restaurant-orders" data-dialog="restaurant"><span>Restaurant Orders ${icon("arrow")}</span></a>
+			<a class="nav-link" href="${visitUrl}" data-visit-anchor aria-label="About Lotus Food"><span>About</span></a>
+			<a class="nav-link" href="${visitUrl}" data-visit-anchor${visitCurrent}><span>Visit Us</span></a>
 		</div></nav>`;
 }
 
@@ -207,6 +213,28 @@ function homePage() {
 		${heroMarkup()}
 		<section aria-labelledby="promotion-title"><div class="section-heading"><div><h2 id="promotion-title">Deals &amp; Promotions</h2></div><a class="text-link" href="${routeUrl("deals")}" data-route>View All Deals ${icon("arrow")}</a></div>
 			<div class="promotion-grid">${promotions.map((promo) => `<a class="promotion-card" href="${routeUrl("deals", new URLSearchParams(`deal=${promo.deal}${promo.category ? `&category=${promo.category}` : ""}`))}" data-route><img src="${imagePlaceholder}" alt="${promo.title} image placeholder"><span class="promotion-copy"><small>${promo.tag}</small><h3>${promo.title}</h3><p>${promo.copy}</p></span></a>`).join("")}</div>
+		</section>
+		<section class="visit-section" id="visit-us" aria-labelledby="visit-title">
+			<div class="visit-copy">
+				<p class="visit-eyebrow">VISIT US</p>
+				<h2 id="visit-title">Discover Asia.<br>Bring Fresh Flavors to Your Table.</h2>
+				<div class="visit-details">
+					<div class="visit-detail">
+						${icon("pin")}
+						<div><h3>Find us in the Strip District</h3><address>1649 Penn Ave<br>Pittsburgh, PA 15222</address></div>
+					</div>
+					<div class="visit-detail">
+						${icon("clock")}
+						<div><h3>Store Hours</h3><dl class="visit-hours"><div><dt>Monday–Thursday</dt><dd>10:00 AM – 6:30 PM</dd></div><div><dt>Friday–Sunday</dt><dd>9:00 AM – 7:00 PM</dd></div></dl></div>
+					</div>
+					<div class="visit-detail">
+						${icon("phone")}
+						<div><h3>Looking for something special?</h3><p>Call to ask about availability.</p><a class="visit-phone" href="tel:+14122813050">(412) 281-3050</a></div>
+					</div>
+				</div>
+				<a class="visit-directions" href="https://www.google.com/maps/dir/?api=1&amp;destination=Lotus+Food+Company%2C+1649+Penn+Ave%2C+Pittsburgh%2C+PA+15222" target="_blank" rel="noopener noreferrer">${icon("pin")} Get Directions</a>
+			</div>
+			<img class="visit-photo" src="${assetUrl("hero2.png")}" alt="Lotus Food Company storefront at 1649 Penn Avenue">
 		</section>
 	</main>`;
 }
@@ -344,6 +372,30 @@ function navigate(url, { scroll = true } = {}) {
 	if (scroll) window.scrollTo(0, 0);
 }
 
+function scrollToVisitSection() {
+	const section = document.querySelector("#visit-us");
+	if (!section) return;
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+}
+
+function navigateToVisitSection() {
+	const wasHome = routeName() === "home";
+	const visitUrl = `${routeUrl("home")}#visit-us`;
+	const target = new URL(visitUrl, location.origin);
+	if (`${location.pathname}${location.search}${location.hash}` !== `${target.pathname}${target.search}${target.hash}`) {
+		history.pushState({}, "", `${target.pathname}${target.search}${target.hash}`);
+	}
+	if (!wasHome) {
+		visibleCount = 8;
+		render();
+	} else {
+		app.querySelector('.nav-link[aria-current="page"]')?.removeAttribute("aria-current");
+		app.querySelector('.nav-link:last-child[data-visit-anchor]')?.setAttribute("aria-current", "location");
+	}
+	scrollToVisitSection();
+}
+
 function routeName() {
 	const page = new URLSearchParams(location.search).get("page");
 	if (page === "shop" || page === "deals") return page;
@@ -367,6 +419,11 @@ function render() {
 }
 
 app.addEventListener("click", (event) => {
+	if (event.target.closest("[data-visit-anchor]")) {
+		event.preventDefault();
+		navigateToVisitSection();
+		return;
+	}
 	const heroControl = event.target.closest("[data-hero-slide], [data-hero-direction]");
 	if (heroControl) {
 		const carousel = heroControl.closest("[data-hero-carousel]");
@@ -484,6 +541,8 @@ app.addEventListener("keydown", (event) => {
 window.addEventListener("popstate", () => {
 	visibleCount = 8;
 	render();
+	if (location.hash === "#visit-us") scrollToVisitSection();
 });
 
 render();
+if (location.hash === "#visit-us") scrollToVisitSection();
