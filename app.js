@@ -147,7 +147,7 @@ function heroMarkup() {
 		<div class="hero-art" aria-hidden="true">
 			<img class="hero-lantern lantern-one" src="${assetUrl("Lantern2.png")}" alt="">
 			<img class="hero-lantern lantern-two" src="${assetUrl("Lantern2.png")}" alt="">
-			<img class="hero-lantern lantern-three" src="${assetUrl("Lantern.png")}" alt="">
+			<img class="hero-lantern lantern-three" src="${assetUrl("Lantern2.png")}" alt="">
 			<img class="hero-cloud cloud-one" src="${assetUrl("Cloud.png")}" alt="">
 			<img class="hero-cloud cloud-two" src="${assetUrl("Cloud.png")}" alt="">
 			<img class="hero-cloud cloud-three" src="${assetUrl("Cloud.png")}" alt="">
