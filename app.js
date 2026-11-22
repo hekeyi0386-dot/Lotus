@@ -145,7 +145,6 @@ function heroMarkup() {
 		<img class="hero-photo" src="${assetUrl("Top-6-Asian-Pantry-Essential-Sauces.webp")}" alt="Six Chinese pantry sauces and cooking condiments">
 		<div class="hero-overlay" aria-hidden="true"></div>
 		<div class="hero-art" aria-hidden="true">
-			<img class="hero-lantern lantern-one" src="${assetUrl("Lantern2.png")}" alt="">
 			<img class="hero-lantern lantern-two" src="${assetUrl("Lantern2.png")}" alt="">
 			<img class="hero-lantern lantern-three" src="${assetUrl("Lantern2.png")}" alt="">
 			<img class="hero-cloud cloud-one" src="${assetUrl("Cloud.png")}" alt="">
