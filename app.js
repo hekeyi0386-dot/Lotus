@@ -101,12 +101,6 @@ function icon(name) {
 
 const imagePlaceholder = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420"><rect width="600" height="420" fill="#e5e5e5"/></svg>')}`;
 
-const heroSlides = [
-	{ title: "Taste Asia in One Stop", copy: "Your local source for Asian food, products, and more.", button: "Shop Now", destination: "shop", image: assetUrl("hero1.png"), alt: "Lotus Food Company storefront" },
-	{ title: "Everything for Your Table.", copy: "Discover familiar favorites and something new for your table.", button: "Explore Deals", destination: "deals", image: assetUrl("hero2.png"), alt: "Entrance to Lotus Food Company" },
-	{ title: "Pittsburgh's First Asian Grocery", copy: "Find seasonal produce, pantry staples, and neighborhood favorites.", button: "Explore Our Store", destination: "shop", image: assetUrl("hero3.png"), alt: "Frozen Asian dumplings at Lotus Food Company" }
-];
-
 function cartCount() {
 	return [...cart.values()].reduce((sum, quantity) => sum + quantity, 0);
 }
@@ -145,12 +139,29 @@ function header(activeRoute) {
 		</div></nav>`;
 }
 
-function heroMarkup(index = 0) {
-	const slide = heroSlides[index];
-	return `<section class="hero" aria-label="Featured promotion" data-hero-slide="${index}">
-		<div class="hero-copy"><h1>${slide.title}</h1><p class="hero-description">${slide.copy}</p><a class="button-primary" href="${routeUrl(slide.destination)}" data-route><span>${slide.button}</span>${icon("arrow")}</a></div>
-		<div class="hero-media"><img src="${slide.image}" alt="${slide.alt}"></div>
-		<div class="hero-controls"><button class="hero-arrow" type="button" aria-label="Previous slide" data-hero="prev">‹</button><div class="hero-dots">${heroSlides.map((_, dot) => `<button class="hero-dot" type="button" aria-label="Slide ${dot + 1}" aria-current="${index === dot}" data-hero="${dot}"></button>`).join("")}</div><button class="hero-arrow" type="button" aria-label="Next slide" data-hero="next">›</button></div>
+function heroMarkup() {
+	const mapSearch = "https://www.google.com/maps/search/?api=1&query=Lotus+Food+Company%2C+Pittsburgh%2C+PA";
+	return `<section class="hero hero-editorial" aria-labelledby="hero-title">
+		<img class="hero-photo" src="${assetUrl("Top-6-Asian-Pantry-Essential-Sauces.webp")}" alt="Six Chinese pantry sauces and cooking condiments">
+		<div class="hero-overlay" aria-hidden="true"></div>
+		<div class="hero-art" aria-hidden="true">
+			<img class="hero-lantern lantern-one" src="${assetUrl("Lantern2.png")}" alt="">
+			<img class="hero-lantern lantern-two" src="${assetUrl("Lantern2.png")}" alt="">
+			<img class="hero-lantern lantern-three" src="${assetUrl("Lantern.png")}" alt="">
+			<img class="hero-cloud cloud-one" src="${assetUrl("Cloud.png")}" alt="">
+			<img class="hero-cloud cloud-two" src="${assetUrl("Cloud.png")}" alt="">
+			<img class="hero-cloud cloud-three" src="${assetUrl("Cloud.png")}" alt="">
+		</div>
+		<div class="hero-copy">
+			<p class="hero-brand">LOTUS FOOD <span aria-hidden="true">·</span> PITTSBURGH</p>
+			<p class="hero-chinese" lang="zh-Hans">百合超市</p>
+			<h1 id="hero-title">Chinese flavors,<br>close to home.</h1>
+			<p class="hero-description">Explore Chinese pantry staples and everyday favorites.</p>
+			<div class="hero-actions">
+				<a class="button-primary" href="${routeUrl("shop")}" data-route>Shop groceries <span aria-hidden="true">→</span></a>
+				<a class="hero-visit-link" href="${mapSearch}" target="_blank" rel="noopener noreferrer">Plan your visit</a>
+			</div>
+		</div>
 	</section>`;
 }
 
@@ -351,23 +362,6 @@ app.addEventListener("click", (event) => {
 		params.set("deal", dealButton.dataset.deal);
 		params.delete("category");
 		navigate(routeUrl("deals", params));
-		return;
-	}
-	const heroAction = event.target.closest("[data-hero]");
-	if (heroAction) {
-		const current = Number(app.querySelector(".hero").dataset.heroSlide || 0);
-		const next = heroAction.dataset.hero === "next" ? (current + 1) % heroSlides.length : heroAction.dataset.hero === "prev" ? (current + heroSlides.length - 1) % heroSlides.length : Number(heroAction.dataset.hero);
-		const hero = app.querySelector(".hero");
-		const slide = heroSlides[next];
-		hero.dataset.heroSlide = next;
-		hero.querySelector("h1").textContent = slide.title;
-		hero.querySelector(".hero-description").textContent = slide.copy;
-		hero.querySelector(".button-primary").href = routeUrl(slide.destination);
-		hero.querySelector(".button-primary span").textContent = slide.button;
-		const heroImage = hero.querySelector(".hero-media img");
-		heroImage.src = slide.image;
-		heroImage.alt = slide.alt;
-		hero.querySelectorAll(".hero-dot").forEach((dot, index) => dot.setAttribute("aria-current", String(index === next)));
 		return;
 	}
 	const wishlistButton = event.target.closest("[data-wishlist]");
