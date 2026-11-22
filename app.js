@@ -140,16 +140,14 @@ function header(activeRoute) {
 			<a class="nav-link" href="${routeUrl("home")}" data-route${current("home")}><span>Home</span></a>
 			<a class="nav-link" href="${routeUrl("shop")}" data-route${current("shop")}><span>Shop</span></a>
 			<a class="nav-link" href="${routeUrl("deals")}" data-route${current("deals")}><span>Deals</span></a>
-			<a class="nav-link restaurant-link" href="#restaurant-orders" data-dialog="restaurant"><span>Restaurant Orders ${icon("arrow")}</span></a>
-			<a class="nav-link" href="${visitUrl}" data-visit-anchor aria-label="About Lotus Food"><span>About</span></a>
 			<a class="nav-link" href="${visitUrl}" data-visit-anchor${visitCurrent}><span>Visit Us</span></a>
 		</div></nav>`;
 }
 
 function heroMarkup() {
 	const slides = [
-		{ image: "Top-6-Asian-Pantry-Essential-Sauces.webp", alt: "Six Chinese pantry sauces and cooking condiments", headline: "Taste Asia in One Stop", cta: "Explore the Aisles", position: "center 54%" },
 		{ image: "group_shot_all.webp", alt: "A colorful selection of Asian grocery favorites", headline: "Everything for Your Table.", cta: "Discover Your Favorites", position: "center 50%" },
+		{ image: "Top-6-Asian-Pantry-Essential-Sauces.webp", alt: "Six Chinese pantry sauces and cooking condiments", headline: "Taste Asia in One Stop", cta: "Explore the Aisles", position: "center 54%" },
 		{ image: "hero3.png", alt: "Shelves of Asian grocery products at Lotus Food", headline: "Pittsburgh's First Asian Grocery", cta: "Explore Our Selection", position: "center 52%" }
 	];
 	return `<section class="hero hero-editorial" aria-label="Featured at Lotus Food" aria-roledescription="carousel" data-hero-carousel data-active-slide="0">
@@ -209,8 +207,65 @@ function homePage() {
 		{ title: "Clearance", copy: "Limited-time discounts", tag: "While supplies last", deal: "clearance" },
 		{ title: "Buy 1 Get 2", copy: "More favorites for less", tag: "Multi-buy deal", deal: "buy1" }
 	];
+	const recommendations = [
+		{
+			label: "Dumplings · Gyoza",
+			title: "Start with dumplings",
+			copy: "A freezer favorite that’s easy to love. Steam them, boil them, or pan-fry them for a quick and comforting bite.",
+			cta: "Explore dumplings",
+			image: "1608_How-to-Make-Steamed-Dumplings-_002.jpg",
+			alt: "Steamed dumplings ready to enjoy",
+			params: new URLSearchParams("category=frozen")
+		},
+		{
+			label: "Ramen · Noodles",
+			title: "Build your bowl",
+			copy: "Start with noodles, then add broth, vegetables, chili oil, or an egg for an easy meal full of comfort and flavor.",
+			cta: "Find your noodles",
+			image: "Lunar-New-Year-Scallion-Oil-Noodles-2.webp",
+			alt: "Scallion oil noodles in a bowl",
+			params: new URLSearchParams("search=ramyun")
+		},
+		{
+			label: "Chili Crisp · Soy Sauce",
+			title: "Flavor starts here",
+			copy: "These pantry staples bring heat, depth, and umami to dumplings, noodles, rice, and everyday cooking.",
+			cta: "Discover sauces & seasonings",
+			image: "Chili sauce.webp",
+			alt: "Chili sauce for adding heat and flavor",
+			params: new URLSearchParams("category=cooking")
+		},
+		{
+			label: "Snacks · Favorites",
+			title: "Try an iconic snack",
+			copy: "Sweet, crunchy, spicy, or nostalgic—snacks are one of the easiest ways to discover a new favorite.",
+			cta: "Explore snacks",
+			image: "241209_Sesame-Balls_5.jpg",
+			alt: "Sesame balls, a sweet and crunchy snack",
+			params: new URLSearchParams("category=snacks")
+		}
+	];
 	return `<main class="main site-width" data-page="home">
 		${heroMarkup()}
+		<section class="discovery-section" aria-labelledby="discovery-title">
+			<div class="discovery-heading">
+				<div class="discovery-intro">
+					<p class="discovery-eyebrow">Start with customer favorites</p>
+					<h2 id="discovery-title">Explore Asian flavors</h2>
+					<p class="discovery-description">Not sure where to begin? Start with a few popular staples loved by first-time shoppers and longtime regulars alike.</p>
+				</div>
+				<p class="discovery-note">A few familiar favorites can open the door to something new.</p>
+			</div>
+			<div class="discovery-grid">${recommendations.map((item) => `<article class="discovery-card">
+				<img class="discovery-image" src="${assetUrl(item.image)}" alt="${item.alt}" loading="lazy">
+				<div class="discovery-card-copy">
+					<p class="discovery-label">${item.label}</p>
+					<h3>${item.title}</h3>
+					<p class="discovery-card-description">${item.copy}</p>
+					<a class="discovery-link" href="${routeUrl("shop", item.params)}" data-route>${item.cta} ${icon("arrow")}</a>
+				</div>
+			</article>`).join("")}</div>
+		</section>
 		<section aria-labelledby="promotion-title"><div class="section-heading"><div><h2 id="promotion-title">Deals &amp; Promotions</h2></div><a class="text-link" href="${routeUrl("deals")}" data-route>View All Deals ${icon("arrow")}</a></div>
 			<div class="promotion-grid">${promotions.map((promo) => `<a class="promotion-card" href="${routeUrl("deals", new URLSearchParams(`deal=${promo.deal}${promo.category ? `&category=${promo.category}` : ""}`))}" data-route><img src="${imagePlaceholder}" alt="${promo.title} image placeholder"><span class="promotion-copy"><small>${promo.tag}</small><h3>${promo.title}</h3><p>${promo.copy}</p></span></a>`).join("")}</div>
 		</section>
