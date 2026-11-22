@@ -78,6 +78,7 @@ function icon(name) {
 	const paths = {
 		pin: '<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
 		user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+		orders: '<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>',
 		search: '<circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/>',
 		heart: '<path d="M20.8 8.8c0 5.2-8.8 10.1-8.8 10.1S3.2 14 3.2 8.8A4.4 4.4 0 0 1 12 6.7a4.4 4.4 0 0 1 8.8 2.1Z"/>',
 		cart: '<path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>',
@@ -125,7 +126,7 @@ function header(activeRoute) {
 			<div class="utility-location"><select class="language-select" aria-label="Language"><option selected>English</option></select><a class="utility-link" href="#location">${icon("pin")} Pittsburgh, PA ${icon("chevron")}</a></div>
 			<div class="utility-links">
 				<div class="account-display"><span class="account-display-icon">${icon("user")}</span><span class="account-display-copy"><span class="account-welcome">Welcome to Lotus!</span><span class="account-sign-in">Sign In / Register</span></span></div>
-				<a class="utility-link utility-action" href="#orders" data-dialog="orders">My Orders</a>
+				<a class="utility-link utility-action utility-orders" href="#orders" data-dialog="orders" aria-label="My Orders">${icon("orders")}<span>My Orders</span></a>
 				<button class="utility-icon-button" type="button" aria-label="Wishlist" data-dialog="wishlist">${icon("heart")}</button>
 				<a class="cart-button utility-cart" href="#cart" data-dialog="cart" aria-label="Shopping cart, ${cartCount()} items">${icon("cart")}<span class="cart-count" id="cart-count">${cartCount()}</span></a>
 			</div>
@@ -148,14 +149,13 @@ function heroMarkup() {
 	const slides = [
 		{ image: "group_shot_all.webp", alt: "A colorful selection of Asian grocery favorites", headline: "Everything for Your Table.", cta: "Discover Your Favorites", position: "center 50%" },
 		{ image: "Top-6-Asian-Pantry-Essential-Sauces.webp", alt: "Six Chinese pantry sauces and cooking condiments", headline: "Taste Asia in One Stop", cta: "Explore the Aisles", position: "center 54%" },
-		{ image: "hero3.png", alt: "Shelves of Asian grocery products at Lotus Food", headline: "Pittsburgh's First Asian Grocery", cta: "Explore Our Selection", position: "center 52%" }
+		{ image: "hero3.png", alt: "Shelves of Asian grocery products at Lotus Food", headline: "Pittsburgh’s Asian Grocery", cta: "Explore Our Selection", position: "center 52%" }
 	];
 	return `<section class="hero hero-editorial" aria-label="Featured at Lotus Food" aria-roledescription="carousel" data-hero-carousel data-active-slide="0">
 		<div class="hero-slides">${slides.map((slide, index) => `<article class="hero-slide${index === 0 ? " is-active" : ""}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${slides.length}" aria-hidden="${index !== 0}" ${index !== 0 ? "inert" : ""}>
 			<img class="hero-photo" src="${assetUrl(slide.image)}" alt="${slide.alt}" style="object-position: ${slide.position}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>
 			<div class="hero-copy">
 				<h1${index === 0 ? ' id="hero-title"' : ""}>${slide.headline}</h1>
-				<p class="hero-description">Explore Chinese pantry staples and everyday favorites.</p>
 				<a class="button-primary" href="${routeUrl("shop")}" data-route>${slide.cta} <span aria-hidden="true">→</span></a>
 			</div>
 		</article>`).join("")}</div>
@@ -252,9 +252,8 @@ function homePage() {
 				<div class="discovery-intro">
 					<p class="discovery-eyebrow">Start with customer favorites</p>
 					<h2 id="discovery-title">Explore Asian flavors</h2>
-					<p class="discovery-description">Not sure where to begin? Start with a few popular staples loved by first-time shoppers and longtime regulars alike.</p>
+					<p class="discovery-description">Not sure where to begin? Follow your cravings and discover something delicious along the way.</p>
 				</div>
-				<p class="discovery-note">A few familiar favorites can open the door to something new.</p>
 			</div>
 			<div class="discovery-grid">${recommendations.map((item) => `<article class="discovery-card">
 				<img class="discovery-image" src="${assetUrl(item.image)}" alt="${item.alt}" loading="lazy">
@@ -272,7 +271,7 @@ function homePage() {
 		<section class="visit-section" id="visit-us" aria-labelledby="visit-title">
 			<div class="visit-copy">
 				<p class="visit-eyebrow">VISIT US</p>
-				<h2 id="visit-title">Discover Asia.<br>Bring Fresh Flavors to Your Table.</h2>
+				<h2 id="visit-title">Discover Asia.<br><span class="visit-title-second">Bring Fresh Flavors to Your Table.</span></h2>
 				<div class="visit-details">
 					<div class="visit-detail">
 						${icon("pin")}
