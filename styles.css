@@ -68,12 +68,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	z-index: 0;
 	inset: 0;
 	overflow: hidden;
-	background-image: url("./Asset%202.png"), url("./Asset%206.png"), url("./Asset%207.png"), url("./Asset%2010.png");
+	background-image: url("./Asset%202.png"), url("./Asset%206.png"), url("./Asset%2013.png"), url("./Asset%2010.png");
 	background-repeat: no-repeat;
-	background-position: 3% -20px, 43% -42px, 76% -22px, calc(100% + 23px) -42px;
-	background-size: 116px 106px, 74px 103px, 128px 108px, 76px 112px;
+	background-position: 30% center, 42% center, 54% center, 65% center;
+	background-size: 78px 71px, 90px 125px, 102px 52px, 80px 118px;
 	content: "";
-	opacity: .11;
+	opacity: .17;
 	pointer-events: none;
 }
 .utility-inner { position: relative; z-index: 1; display: flex; min-height: 80px; align-items: center; justify-content: space-between; gap: clamp(20px, 4vw, 64px); padding-block: 10px; }
@@ -122,16 +122,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	overflow: hidden;
 	background-color: #A67B57;
 	content: "";
-	opacity: .16;
+	opacity: .23;
 	pointer-events: none;
-	-webkit-mask-image: url("./Asset%201.png"), url("./Asset%203.png"), url("./Asset%208.png"), url("./Asset%2013.png");
+	-webkit-mask-image: url("./Asset%201.png"), url("./Asset%208.png"), url("./Asset%2013.png");
 	-webkit-mask-repeat: no-repeat;
-	-webkit-mask-position: left -145px bottom -85px, 32% -70px, 79% -76px, right -88px bottom -38px;
-	-webkit-mask-size: 184px 181px, 101px 105px, 110px 112px, 128px 66px;
-	mask-image: url("./Asset%201.png"), url("./Asset%203.png"), url("./Asset%208.png"), url("./Asset%2013.png");
+	-webkit-mask-position: -112px -30px, calc(100% - 40px) -54px, calc(100% - 52px) 17px;
+	-webkit-mask-size: 170px 167px, 112px 137px, 130px 66px;
+	mask-image: url("./Asset%201.png"), url("./Asset%208.png"), url("./Asset%2013.png");
 	mask-repeat: no-repeat;
-	mask-position: left -145px bottom -85px, 32% -70px, 79% -76px, right -88px bottom -38px;
-	mask-size: 184px 181px, 101px 105px, 110px 112px, 128px 66px;
+	mask-position: -112px -30px, calc(100% - 40px) -54px, calc(100% - 52px) 17px;
+	mask-size: 170px 167px, 112px 137px, 130px 66px;
 }
 .header-inner { position: relative; z-index: 1; display: grid; min-height: 100px; grid-template-columns: 226px minmax(0, 1fr); align-items: center; gap: 20px; }
 .brand { display: inline-flex; width: 100%; align-items: center; color: var(--forest); line-height: 1; }
@@ -583,10 +583,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	.site-width { width: calc(100% - 32px); }
 	.utility-bar { min-height: 0; }
 	.utility-bar::before {
-		background-image: url("./Asset%202.png"), url("./Asset%2010.png");
-		background-position: 16% -40px, calc(100% + 17px) -50px;
-		background-size: 82px 75px, 56px 83px;
-		opacity: .08;
+		background-image: none;
 	}
 	.utility-inner { width: calc(100% - 8px); min-height: 56px; gap: 4px; padding-block: 8px; }
 	.utility-location { min-width: 0; gap: 4px; }
@@ -608,13 +605,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	.header-tools { display: flex; width: 100%; }
 	.search-form { width: 100%; height: 44px; }
 	.main-header::before {
-		opacity: .12;
+		opacity: .16;
 		-webkit-mask-image: url("./Asset%201.png"), url("./Asset%2013.png");
-		-webkit-mask-position: left -78px bottom -86px, right -32px bottom -28px;
-		-webkit-mask-size: 128px 126px, 94px 48px;
+		-webkit-mask-position: -92px -24px, calc(100% - 58px) 37px;
+		-webkit-mask-size: 116px 114px, 88px 45px;
 		mask-image: url("./Asset%201.png"), url("./Asset%2013.png");
-		mask-position: left -78px bottom -86px, right -32px bottom -28px;
-		mask-size: 128px 126px, 94px 48px;
+		mask-position: -92px -24px, calc(100% - 58px) 37px;
+		mask-size: 116px 114px, 88px 45px;
 	}
 	.nav-inner { min-height: 48px; }
 	.nav-link { font-size: clamp(11px, 3.2vw, 14px); }
