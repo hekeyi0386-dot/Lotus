@@ -229,7 +229,7 @@ function homePage() {
 		},
 		{
 			label: "Chili Crisp · Soy Sauce",
-			copy: "These pantry staples bring heat, depth, and umami to dumplings, noodles, rice, and everyday cooking.",
+			copy: "Explore a world of Asian sauces and seasonings that bring extra flavor to everyday meals.",
 			cta: "Discover sauces & seasonings",
 			image: "Chili sauce.webp",
 			alt: "Chili sauce for adding heat and flavor",
@@ -237,7 +237,7 @@ function homePage() {
 		},
 		{
 			label: "Snacks · Favorites",
-			copy: "Sweet, crunchy, spicy, or nostalgic—snacks are one of the easiest ways to discover a new favorite.",
+			copy: "Sweet, crunchy, spicy, or nostalgic... Snacks are one of the easiest ways to discover a new favorite.",
 			cta: "Explore snacks",
 			image: "241209_Sesame-Balls_5.jpg",
 			alt: "Sesame balls, a sweet and crunchy snack",
@@ -268,7 +268,6 @@ function homePage() {
 		</section>
 		<section class="visit-section" id="visit-us" aria-labelledby="visit-title">
 			<div class="visit-copy">
-				<p class="visit-eyebrow">VISIT US</p>
 				<h2 id="visit-title">Discover Asia.<br><span class="visit-title-second">Bring Fresh Flavors to Your Table.</span></h2>
 				<div class="visit-details">
 					<div class="visit-detail">

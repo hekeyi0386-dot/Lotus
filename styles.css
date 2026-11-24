@@ -24,6 +24,7 @@
 	--orange-dark: #a9430e;
 	--orange-light: #fac49f;
 	--heritage-red: #713833;
+	--brand-red: #844338;
 	--heritage-red-deep: #542a27;
 	--heritage-gold: #b69a68;
 	--cream: #F3E8D7;
@@ -399,7 +400,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .discovery-image { width: 100%; aspect-ratio: 1.2 / 1; object-fit: cover; background: var(--soft-cream); }
 .discovery-card-copy { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 18px 17px 17px; }
-.discovery-label { margin: 0 0 9px; color: var(--orange-dark); font-size: 12px; font-weight: 600; }
+.discovery-label { margin: 0 0 9px; color: var(--brand-red); font-size: 12px; font-weight: 600; }
 .discovery-card h3 { margin: 0; color: var(--forest); font-family: var(--font-display); font-size: 23px; font-weight: 400; line-height: 1.16; }
 .discovery-card-description { margin: 10px 0 17px; color: var(--muted); font-size: 13px; line-height: 1.6; }
 .discovery-link { display: inline-flex; min-height: 24px; align-items: center; gap: 7px; margin-top: auto; color: var(--green); font-size: 13px; font-weight: 700; }
@@ -417,13 +418,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	scroll-margin-top: 24px;
 }
 .visit-copy { min-width: 0; padding-block: 18px; }
-.visit-eyebrow {
-	margin: 0 0 17px;
-	color: var(--orange-dark);
-	font-size: 12px;
-	font-weight: 700;
-	letter-spacing: .2em;
-}
 .visit-copy h2 {
 	max-width: 540px;
 	margin: 0;
@@ -446,7 +440,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .visit-detail:first-child { border-top: 1px solid rgba(109, 91, 73, .2); }
 .visit-detail > svg { width: 19px; height: 19px; margin-top: 2px; color: var(--green); }
-.visit-detail h3 { margin: 0; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.4; }
+.visit-detail h3 { margin: 0; color: var(--brand-red); font-size: 15px; font-weight: 700; line-height: 1.4; }
 .visit-detail address, .visit-detail p {
 	margin: 5px 0 0;
 	color: var(--muted);
@@ -456,7 +450,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .visit-hours { display: grid; gap: 5px; margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
 .visit-hours > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 14px; }
-.visit-hours dd { margin: 0; color: var(--ink); font-weight: 500; }
+.visit-hours dd { margin: 0; color: var(--brand-red); font-weight: 500; }
 .visit-phone { display: inline-block; margin-top: 3px; color: var(--green); font-size: 14px; font-weight: 700; }
 .visit-phone:hover { color: var(--forest); text-decoration: underline; text-underline-offset: 3px; }
 .visit-directions {
@@ -642,7 +636,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 	.discovery-link { font-size: 12px; }
 	.visit-section { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: stretch; gap: 14px; margin-top: 48px; }
 	.visit-copy { padding-block: 0; }
-	.visit-eyebrow { margin-bottom: 10px; font-size: 10px; letter-spacing: .16em; }
 	.visit-copy h2 { max-width: none; font-size: clamp(25px, 4vw, 31px); line-height: 1.05; }
 	.visit-title-second { font-size: .76em; }
 	.visit-details { margin-top: 15px; }
@@ -876,7 +869,7 @@ html.intro-active .welcome-intro.is-exiting { transform: translateY(-100%); }
 	.nav-search { flex: 1 1 100%; margin-left: 0; }
 }
 /* Explore Asian flavors: category labels act as card titles */
-.discovery-card .discovery-label { margin: 0 0 10px; color: var(--orange-dark); font-family: var(--font-display); font-size: 23px; font-weight: 400; line-height: 1.16; }
+.discovery-card .discovery-label { margin: 0 0 10px; color: var(--brand-red); font-family: var(--font-display); font-size: 23px; font-weight: 400; line-height: 1.16; }
 @media (max-width: 760px) { .discovery-card .discovery-label { margin-bottom: 8px; font-size: 18px; } }
 @media (max-width: 480px) { .discovery-card .discovery-label { margin-bottom: 6px; font-size: 17px; line-height: 1.14; } }
 
