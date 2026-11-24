@@ -5,10 +5,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#713833">
 	<title>Lotus Food | Asian Grocery in Pittsburgh</title>
+	<script>
+		(function () {
+			var seen = false;
+			try { seen = sessionStorage.getItem("lotusIntroSeen") === "1"; } catch (e) {}
+			if (seen) return;
+			document.documentElement.classList.add("intro-active");
+			var l = document.createElement("link");
+			l.rel = "preload"; l.as = "image"; l.href = "./group_shot_all.webp";
+			document.head.appendChild(l);
+		})();
+	</script>
 	<link rel="stylesheet" href="./styles.css?v=header-print-20261122">
+	<script src="./intro.js?v=intro-20261123" defer></script>
+	<script src="./i18n.js?v=lang-20261124" defer></script>
 	<script src="./app.js?v=header-print-20261122" defer></script>
 </head>
 <body>
+	<div id="welcome-intro" class="welcome-intro" role="dialog" aria-label="Welcome to Lotus" hidden>
+		<h1 class="welcome-title">Welcome to Lotus</h1>
+		<button type="button" class="welcome-scroll" id="welcome-enter" aria-label="Enter website">
+			<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11l6-6 6 6"/><path d="M6 19l6-6 6 6"/></svg>
+		</button>
+	</div>
 	<div id="app"></div>
 	<noscript>This grocery storefront needs JavaScript enabled.</noscript>
 </body>

@@ -81,7 +81,7 @@ function icon(name) {
 		orders: '<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>',
 		search: '<circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/>',
 		heart: '<path d="M20.8 8.8c0 5.2-8.8 10.1-8.8 10.1S3.2 14 3.2 8.8A4.4 4.4 0 0 1 12 6.7a4.4 4.4 0 0 1 8.8 2.1Z"/>',
-		cart: '<path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>',
+		cart: '<path d="M2.5 4h2.4l2 9.4a1.6 1.6 0 0 0 1.6 1.3h8.1a1.6 1.6 0 0 0 1.6-1.2L19.8 7H5.6"/><circle cx="9.5" cy="19.6" r="1.7" fill="currentColor" stroke="none"/><circle cx="16.5" cy="19.6" r="1.7" fill="currentColor" stroke="none"/>',
 		arrow: '<path d="M4 12h15M13 6l6 6-6 6"/>',
 		clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
 		phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/>',
@@ -123,32 +123,35 @@ function header(activeRoute) {
 	const visitUrl = `${routeUrl("home")}#visit-us`;
 	return `
 		<div class="utility-bar"><div class="utility-inner site-width">
-			<div class="utility-location"><select class="language-select" aria-label="Language"><option selected>English</option></select><a class="utility-link" href="#location">${icon("pin")} Pittsburgh, PA ${icon("chevron")}</a></div>
+			<div class="utility-location">
+				<div class="lang-toggle" role="group" aria-label="Language">
+					<button type="button" data-lang="en" aria-pressed="${LotusI18n.lang === "en"}" lang="en">EN</button>
+					<button type="button" data-lang="zh" aria-pressed="${LotusI18n.lang === "zh"}" lang="zh">中</button>
+				</div>
+				<a class="utility-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=Lotus+Food+Company%2C+1649+Penn+Ave%2C+Pittsburgh%2C+PA+15222" target="_blank" rel="noopener noreferrer" aria-label="Open 1649 Penn Ave in Google Maps (opens in a new tab)">${icon("pin")} 1649 Penn Ave</a>
+			</div>
 			<div class="utility-links">
 				<div class="account-display"><span class="account-display-icon">${icon("user")}</span><span class="account-display-copy"><span class="account-welcome">Welcome to Lotus!</span><span class="account-sign-in">Sign In / Register</span></span></div>
-				<a class="utility-link utility-action utility-orders" href="#orders" data-dialog="orders" aria-label="My Orders">${icon("orders")}<span>My Orders</span></a>
 				<button class="utility-icon-button" type="button" aria-label="Wishlist" data-dialog="wishlist">${icon("heart")}</button>
-				<a class="cart-button utility-cart" href="#cart" data-dialog="cart" aria-label="Shopping cart, ${cartCount()} items">${icon("cart")}<span class="cart-count" id="cart-count">${cartCount()}</span></a>
+				<a class="cart-button utility-cart" href="#cart" data-dialog="cart" aria-label="Shopping cart, ${cartCount()} items">${icon("cart")}</a>
 			</div>
 		</div></div>
-		<header class="main-header"><div class="header-inner site-width">
-			<a class="brand" href="${routeUrl("home")}" data-route aria-label="Lotus Food home"><img class="brand-logo" src="${assetUrl("logolotus.png")}" alt="Lotus Food Asian grocery, Since 1989"></a>
-			<div class="header-tools">
-				<form class="search-form" id="site-search" role="search"><input name="q" type="search" placeholder="Find Your Taste of Asia..." aria-label="Search products"><button aria-label="Search">${icon("search")}</button></form>
-			</div>
-		</div></header>
 		<nav class="primary-nav" aria-label="Primary navigation"><div class="nav-inner site-width">
-			<a class="nav-link" href="${routeUrl("home")}" data-route${current("home")}><span>Home</span></a>
-			<a class="nav-link" href="${routeUrl("shop")}" data-route${current("shop")}><span>Shop</span></a>
-			<a class="nav-link" href="${routeUrl("deals")}" data-route${current("deals")}><span>Deals</span></a>
-			<a class="nav-link" href="${visitUrl}" data-visit-anchor${visitCurrent}><span>Visit Us</span></a>
+			<a class="nav-brand" href="${routeUrl("home")}" data-route aria-label="Lotus Food home"><img src="${assetUrl("logolotus.png")}" alt="Lotus Food Asian grocery, Since 1989"></a>
+			<div class="nav-links">
+				<a class="nav-link" href="${routeUrl("home")}" data-route${current("home")}><span>Home</span></a>
+				<a class="nav-link" href="${routeUrl("shop")}" data-route${current("shop")}><span>Shop</span></a>
+				<a class="nav-link" href="${routeUrl("deals")}" data-route${current("deals")}><span>Deals</span></a>
+				<a class="nav-link" href="${visitUrl}" data-visit-anchor${visitCurrent}><span>Visit Us</span></a>
+			</div>
+			<form class="search-form nav-search" id="site-search" role="search"><input name="q" type="search" placeholder="Find Your Taste of Asia..." aria-label="Search products"><button aria-label="Search">${icon("search")}</button></form>
 		</div></nav>`;
 }
 
 function heroMarkup() {
 	const slides = [
 		{ image: "group_shot_all.webp", alt: "A colorful selection of Asian grocery favorites", headline: "Everything for Your Table.", cta: "Discover Your Favorites", position: "center 50%" },
-		{ image: "Top-6-Asian-Pantry-Essential-Sauces.webp", alt: "Six Chinese pantry sauces and cooking condiments", headline: "Taste Asia in One Stop", cta: "Explore the Aisles", position: "center 54%" },
+		{ image: "Top-6-Asian-Pantry-Essential-Sauces.webp", alt: "Six Chinese pantry sauces and cooking condiments", headline: "Taste Asia in One Stop", cta: "Explore Asian Flavors", position: "center 54%" },
 		{ image: "hero3.png", alt: "Shelves of Asian grocery products at Lotus Food", headline: "Pittsburgh’s Asian Grocery", cta: "Explore Our Selection", position: "center 52%" }
 	];
 	return `<section class="hero hero-editorial" aria-label="Featured at Lotus Food" aria-roledescription="carousel" data-hero-carousel data-active-slide="0">
@@ -202,15 +205,14 @@ function setupHeroCarousel() {
 
 function homePage() {
 	const promotions = [
-		{ title: "Beauty Deals", copy: "Skincare, makeup & more", tag: "Weekly offer", deal: "weekly", category: "beauty" },
-		{ title: "Group Buy", copy: "Buy together and save more", tag: "Better together", deal: "group" },
-		{ title: "Clearance", copy: "Limited-time discounts", tag: "While supplies last", deal: "clearance" },
-		{ title: "Buy 1 Get 2", copy: "More favorites for less", tag: "Multi-buy deal", deal: "buy1" }
+		{ title: "Beauty Deals", copy: "Skincare, makeup & more", deal: "weekly", category: "beauty" },
+		{ title: "Group Buy", copy: "Buy together and save more", deal: "group" },
+		{ title: "Clearance", copy: "Limited-time discounts", deal: "clearance" },
+		{ title: "Buy 1 Get 2", copy: "More favorites for less", deal: "buy1" }
 	];
 	const recommendations = [
 		{
 			label: "Dumplings · Gyoza",
-			title: "Start with dumplings",
 			copy: "A freezer favorite that’s easy to love. Steam them, boil them, or pan-fry them for a quick and comforting bite.",
 			cta: "Explore dumplings",
 			image: "1608_How-to-Make-Steamed-Dumplings-_002.jpg",
@@ -219,7 +221,6 @@ function homePage() {
 		},
 		{
 			label: "Ramen · Noodles",
-			title: "Build your bowl",
 			copy: "Start with noodles, then add broth, vegetables, chili oil, or an egg for an easy meal full of comfort and flavor.",
 			cta: "Find your noodles",
 			image: "Lunar-New-Year-Scallion-Oil-Noodles-2.webp",
@@ -228,7 +229,6 @@ function homePage() {
 		},
 		{
 			label: "Chili Crisp · Soy Sauce",
-			title: "Flavor starts here",
 			copy: "These pantry staples bring heat, depth, and umami to dumplings, noodles, rice, and everyday cooking.",
 			cta: "Discover sauces & seasonings",
 			image: "Chili sauce.webp",
@@ -237,7 +237,6 @@ function homePage() {
 		},
 		{
 			label: "Snacks · Favorites",
-			title: "Try an iconic snack",
 			copy: "Sweet, crunchy, spicy, or nostalgic—snacks are one of the easiest ways to discover a new favorite.",
 			cta: "Explore snacks",
 			image: "241209_Sesame-Balls_5.jpg",
@@ -245,12 +244,12 @@ function homePage() {
 			params: new URLSearchParams("category=snacks")
 		}
 	];
-	return `<main class="main site-width" data-page="home">
+	return `<main class="main" data-page="home">
 		${heroMarkup()}
+		<div class="site-width">
 		<section class="discovery-section" aria-labelledby="discovery-title">
 			<div class="discovery-heading">
 				<div class="discovery-intro">
-					<p class="discovery-eyebrow">Start with customer favorites</p>
 					<h2 id="discovery-title">Explore Asian flavors</h2>
 					<p class="discovery-description">Not sure where to begin? Follow your cravings and discover something delicious along the way.</p>
 				</div>
@@ -258,15 +257,14 @@ function homePage() {
 			<div class="discovery-grid">${recommendations.map((item) => `<article class="discovery-card">
 				<img class="discovery-image" src="${assetUrl(item.image)}" alt="${item.alt}" loading="lazy">
 				<div class="discovery-card-copy">
-					<p class="discovery-label">${item.label}</p>
-					<h3>${item.title}</h3>
+					<h3 class="discovery-label">${item.label}</h3>
 					<p class="discovery-card-description">${item.copy}</p>
 					<a class="discovery-link" href="${routeUrl("shop", item.params)}" data-route>${item.cta} ${icon("arrow")}</a>
 				</div>
 			</article>`).join("")}</div>
 		</section>
 		<section aria-labelledby="promotion-title"><div class="section-heading"><div><h2 id="promotion-title">Deals &amp; Promotions</h2></div><a class="text-link" href="${routeUrl("deals")}" data-route>View All Deals ${icon("arrow")}</a></div>
-			<div class="promotion-grid">${promotions.map((promo) => `<a class="promotion-card" href="${routeUrl("deals", new URLSearchParams(`deal=${promo.deal}${promo.category ? `&category=${promo.category}` : ""}`))}" data-route><img src="${imagePlaceholder}" alt="${promo.title} image placeholder"><span class="promotion-copy"><small>${promo.tag}</small><h3>${promo.title}</h3><p>${promo.copy}</p></span></a>`).join("")}</div>
+			<div class="promotion-grid">${promotions.map((promo) => `<a class="promotion-card" href="${routeUrl("deals", new URLSearchParams(`deal=${promo.deal}${promo.category ? `&category=${promo.category}` : ""}`))}" data-route><img src="${imagePlaceholder}" alt="${promo.title} image placeholder"><span class="promotion-copy"><h3>${promo.title}</h3><p>${promo.copy}</p></span></a>`).join("")}</div>
 		</section>
 		<section class="visit-section" id="visit-us" aria-labelledby="visit-title">
 			<div class="visit-copy">
@@ -275,7 +273,7 @@ function homePage() {
 				<div class="visit-details">
 					<div class="visit-detail">
 						${icon("pin")}
-						<div><h3>Find us in the Strip District</h3><address>1649 Penn Ave<br>Pittsburgh, PA 15222</address></div>
+						<div><h3>Find us in the Strip District</h3><address>1649 Penn Ave<br>Strip District, Pittsburgh, PA 15222</address></div>
 					</div>
 					<div class="visit-detail">
 						${icon("clock")}
@@ -290,6 +288,7 @@ function homePage() {
 			</div>
 			<img class="visit-photo" src="${assetUrl("hero2.png")}" alt="Lotus Food Company storefront at 1649 Penn Avenue">
 		</section>
+		</div>
 	</main>`;
 }
 
@@ -473,6 +472,15 @@ function render() {
 }
 
 app.addEventListener("click", (event) => {
+	const langButton = event.target.closest("[data-lang]");
+	if (langButton) {
+		if (LotusI18n.lang !== langButton.dataset.lang) {
+			LotusI18n.setLang(langButton.dataset.lang);
+			render();
+			app.querySelector(`[data-lang="${langButton.dataset.lang}"]`)?.focus();
+		}
+		return;
+	}
 	if (event.target.closest("[data-visit-anchor]")) {
 		event.preventDefault();
 		navigateToVisitSection();
