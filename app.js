@@ -228,7 +228,7 @@ function homePage() {
 			params: new URLSearchParams("search=ramyun")
 		},
 		{
-			label: "Chili Crisp · Soy Sauce",
+			label: "Chili · Soy Sauce",
 			copy: "Explore a world of Asian sauces and seasonings that bring extra flavor to everyday meals.",
 			cta: "Discover sauces & seasonings",
 			image: "Chili sauce.webp",

@@ -27,7 +27,7 @@
 		"Explore Asian flavors": "探索亚洲风味",
 		"Not sure where to begin? Follow your cravings and discover something delicious along the way.": "不知从何开始？跟着您的味蕾走，沿途发现美味惊喜。",
 		"Dumplings · Gyoza": "饺子 · 煎饺", "Ramen · Noodles": "拉面 · 面条",
-		"Chili Crisp · Soy Sauce": "辣椒脆 · 酱油", "Snacks · Favorites": "零食 · 人气之选",
+		"Chili Crisp · Soy Sauce": "辣椒脆 · 酱油", "Chili · Soy Sauce": "辣椒 · 酱油", "Snacks · Favorites": "零食 · 人气之选",
 		"A freezer favorite that’s easy to love. Steam them, boil them, or pan-fry them for a quick and comforting bite.": "冷冻区的人气之选，人见人爱。蒸、煮、煎皆宜，快手又暖心。",
 		"Start with noodles, then add broth, vegetables, chili oil, or an egg for an easy meal full of comfort and flavor.": "从面条开始，加入高汤、蔬菜、辣油或鸡蛋，轻松做出一碗温暖又美味的面。",
 		"These pantry staples bring heat, depth, and umami to dumplings, noodles, rice, and everyday cooking.": "这些厨房必备调味料，为饺子、面条、米饭和日常烹饪增添辛香、层次与鲜味。",

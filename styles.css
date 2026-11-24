@@ -25,6 +25,7 @@
 	--orange-light: #fac49f;
 	--heritage-red: #713833;
 	--brand-red: #844338;
+	--header-red: #8E3E34; /* matches the top utility bar background */
 	--heritage-red-deep: #542a27;
 	--heritage-gold: #b69a68;
 	--cream: #F3E8D7;
@@ -421,7 +422,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .visit-copy h2 {
 	max-width: 540px;
 	margin: 0;
-	color: var(--forest);
+	color: var(--header-red);
 	font-family: var(--font-display);
 	font-size: clamp(38px, 4vw, 56px);
 	font-weight: 400;
@@ -440,7 +441,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .visit-detail:first-child { border-top: 1px solid rgba(109, 91, 73, .2); }
 .visit-detail > svg { width: 19px; height: 19px; margin-top: 2px; color: var(--green); }
-.visit-detail h3 { margin: 0; color: var(--brand-red); font-size: 15px; font-weight: 700; line-height: 1.4; }
+.visit-detail h3 { margin: 0; color: var(--header-red); font-size: 15px; font-weight: 700; line-height: 1.4; }
 .visit-detail address, .visit-detail p {
 	margin: 5px 0 0;
 	color: var(--muted);
@@ -450,7 +451,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .visit-hours { display: grid; gap: 5px; margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
 .visit-hours > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 14px; }
-.visit-hours dd { margin: 0; color: var(--brand-red); font-weight: 500; }
+.visit-hours dd { margin: 0; color: var(--header-red); font-weight: 500; }
 .visit-phone { display: inline-block; margin-top: 3px; color: var(--green); font-size: 14px; font-weight: 700; }
 .visit-phone:hover { color: var(--forest); text-decoration: underline; text-underline-offset: 3px; }
 .visit-directions {
@@ -793,7 +794,7 @@ html.intro-active .welcome-intro.is-exiting { transform: translateY(-100%); }
 }
 
 /* Header + hero recomposition: slim utility bar, left-aligned nav, editorial hero */
-.utility-bar { min-height: 0; font-size: 14px; background: #8E3E34; }
+.utility-bar { min-height: 0; font-size: 14px; background: var(--header-red); }
 .utility-bar::before { display: none; }
 .utility-inner { min-height: 44px; padding-block: 6px; }
 .utility-location { gap: 18px; }
