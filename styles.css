@@ -422,7 +422,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .visit-copy h2 {
 	max-width: 540px;
 	margin: 0;
-	color: var(--header-red);
+	color: var(--forest);
 	font-family: var(--font-display);
 	font-size: clamp(38px, 4vw, 56px);
 	font-weight: 400;
