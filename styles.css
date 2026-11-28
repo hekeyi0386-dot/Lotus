@@ -24,8 +24,6 @@
 	--orange-dark: #a9430e;
 	--orange-light: #fac49f;
 	--heritage-red: #713833;
-	--brand-red: #844338;
-	--header-red: #8E3E34; /* matches the top utility bar background */
 	--heritage-red-deep: #542a27;
 	--heritage-gold: #b69a68;
 	--cream: #F3E8D7;
@@ -342,17 +340,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .quick-link { display: flex; min-height: 74px; align-items: center; justify-content: center; gap: 12px; padding: 12px 16px; }
 .quick-link + .quick-link { border-left: 1px solid var(--line); }
 .quick-icon { display: grid; width: 37px; height: 37px; flex: 0 0 37px; place-items: center; border-radius: 50%; color: var(--green); background: var(--soft-green); }
-.quick-link:nth-child(even) .quick-icon { color: var(--orange-dark); background: var(--soft-orange); }
+.quick-link:nth-child(even) .quick-icon { color: var(--orange); background: var(--soft-orange); }
 .quick-icon svg { width: 18px; height: 18px; }
 .quick-copy { display: grid; gap: 3px; }
 .quick-copy strong { font-size: 12px; }
 .quick-copy span { color: var(--muted); font-size: 10px; }
-.quick-link:hover .quick-copy strong { color: var(--orange-dark); }
+.quick-link:hover .quick-copy strong { color: var(--orange); }
 
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 42px 0 20px; }
 .section-heading h2 { margin: 0; color: var(--forest); font-family: var(--font-display); font-size: 32px; font-weight: 400; letter-spacing: 0; line-height: 1.15; }
 .section-heading p { margin: 8px 0 0; color: var(--muted); font-size: 16px; }
-.text-link { display: inline-flex; align-items: center; gap: 7px; color: var(--orange-dark); font-size: 14px; font-weight: 700; white-space: nowrap; }
+.text-link { display: inline-flex; align-items: center; gap: 7px; color: var(--orange); font-size: 14px; font-weight: 700; white-space: nowrap; }
 .text-link:hover { gap: 10px; }
 .promotion-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .promotion-card { position: relative; display: flex; min-height: 190px; align-items: end; overflow: hidden; padding: 20px; border-radius: 8px; color: var(--paper); background: var(--green); box-shadow: 0 4px 14px rgba(var(--forest-rgb),.08); }
@@ -375,7 +373,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .discovery-intro { max-width: 690px; }
 .discovery-eyebrow {
 	margin: 0 0 10px;
-	color: var(--orange-dark);
+	color: var(--orange);
 	font-size: 13px;
 	font-weight: 700;
 	letter-spacing: .04em;
@@ -401,7 +399,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .discovery-image { width: 100%; aspect-ratio: 1.2 / 1; object-fit: cover; background: var(--soft-cream); }
 .discovery-card-copy { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 18px 17px 17px; }
-.discovery-label { margin: 0 0 9px; color: var(--brand-red); font-size: 12px; font-weight: 600; }
+.discovery-label { margin: 0 0 9px; color: var(--orange); font-size: 12px; font-weight: 600; }
 .discovery-card h3 { margin: 0; color: var(--forest); font-family: var(--font-display); font-size: 23px; font-weight: 400; line-height: 1.16; }
 .discovery-card-description { margin: 10px 0 17px; color: var(--muted); font-size: 13px; line-height: 1.6; }
 .discovery-link { display: inline-flex; min-height: 24px; align-items: center; gap: 7px; margin-top: auto; color: var(--green); font-size: 13px; font-weight: 700; }
@@ -441,7 +439,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .visit-detail:first-child { border-top: 1px solid rgba(109, 91, 73, .2); }
 .visit-detail > svg { width: 19px; height: 19px; margin-top: 2px; color: var(--green); }
-.visit-detail h3 { margin: 0; color: var(--header-red); font-size: 15px; font-weight: 700; line-height: 1.4; }
+.visit-detail h3 { margin: 0; color: var(--orange); font-size: 15px; font-weight: 700; line-height: 1.4; }
 .visit-detail address, .visit-detail p {
 	margin: 5px 0 0;
 	color: var(--muted);
@@ -451,7 +449,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .visit-hours { display: grid; gap: 5px; margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
 .visit-hours > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 14px; }
-.visit-hours dd { margin: 0; color: var(--header-red); font-weight: 500; }
+.visit-hours dd { margin: 0; color: var(--orange); font-weight: 500; }
 .visit-phone { display: inline-block; margin-top: 3px; color: var(--green); font-size: 14px; font-weight: 700; }
 .visit-phone:hover { color: var(--forest); text-decoration: underline; text-underline-offset: 3px; }
 .visit-directions {
@@ -503,7 +501,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .catalog-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
 .catalog-heading h2 { margin: 0; color: var(--forest); font-family: var(--font-display); font-size: 32px; font-weight: 400; line-height: 1.15; }
 .collection-chip { display: inline-flex; align-items: center; gap: 7px; margin-top: 10px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 99px; color: var(--forest); background: var(--paper); font-size: 14px; }
-.collection-chip[aria-pressed="true"] { border-color: var(--orange); color: var(--orange-dark); background: var(--soft-orange); }
+.collection-chip[aria-pressed="true"] { border-color: var(--orange); color: var(--orange); background: var(--soft-orange); }
 .catalog-sort { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; }
 .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .filter-select, .deal-filter { min-height: 32px; appearance: none; -webkit-appearance: none; padding: 0 48px 0 12px; border: 1px solid var(--neutral-border); border-radius: 5px; color: var(--ink); background-color: var(--paper); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23292d1f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-position: right 20px center; background-repeat: no-repeat; background-size: 15px 15px; font-size: 16px; font-weight: 400; }
@@ -517,14 +515,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .product-badge { position: absolute; top: 9px; left: 9px; padding: 4px 6px; border-radius: 3px; color: var(--ink); background: var(--orange); font-size: 9px; font-weight: 700; }
 .wishlist-button { position: absolute; top: 7px; right: 7px; display: grid; width: 29px; height: 29px; place-items: center; padding: 0; border: 1px solid rgba(var(--forest-rgb),.16); border-radius: 50%; color: var(--forest); background: rgba(var(--white-rgb),.94); }
 .wishlist-button svg { width: 15px; height: 15px; }
-.wishlist-button[aria-pressed="true"] { color: var(--orange-dark); }
+.wishlist-button[aria-pressed="true"] { color: var(--orange); }
 .wishlist-button[aria-pressed="true"] svg { fill: currentColor; }
 .product-info { display: flex; flex: 1; flex-direction: column; gap: 3px; padding: 14px; }
 .product-brand { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: .35px; text-transform: uppercase; }
 .product-name { min-height: 40px; margin: 3px 0; color: var(--ink); font-size: 15px; font-weight: 650; line-height: 1.4; }
 .product-size { color: var(--muted); font-size: 14px; }
 .product-prices { display: flex; align-items: baseline; gap: 7px; margin: 10px 0 14px; }
-.product-price { color: var(--orange-dark); font-size: 18px; font-weight: 800; }
+.product-price { color: var(--orange); font-size: 18px; font-weight: 800; }
 .product-original { color: var(--muted); font-size: 14px; text-decoration: line-through; }
 .product-actions { display: flex; gap: 6px; margin-top: auto; }
 .add-button { display: inline-flex; min-height: 42px; flex: 1; align-items: center; justify-content: center; gap: 6px; padding: 0 8px; border: 1px solid var(--green); border-radius: 4px; color: var(--paper); background: var(--green); font-size: 16px; font-weight: 700; white-space: nowrap; }
@@ -542,7 +540,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .deals-intro p { margin: 9px 0 0; color: var(--muted); font-size: 16px; }
 .deal-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
 .deal-tab { display: flex; min-height: 46px; align-items: center; justify-content: center; padding: 7px 10px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: var(--paper); font-size: 16px; font-weight: 700; text-align: center; }
-.deal-tab:hover { border-color: var(--orange); color: var(--orange-dark); }
+.deal-tab:hover { border-color: var(--orange); color: var(--orange); }
 .deal-tab[aria-selected="true"] { border-color: var(--orange); color: var(--ink); background: var(--orange); }
 .deal-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 18px 0 12px; }
 .deal-toolbar .filter-row { margin: 0; }
@@ -794,7 +792,7 @@ html.intro-active .welcome-intro.is-exiting { transform: translateY(-100%); }
 }
 
 /* Header + hero recomposition: slim utility bar, left-aligned nav, editorial hero */
-.utility-bar { min-height: 0; font-size: 14px; background: var(--header-red); }
+.utility-bar { min-height: 0; font-size: 14px; background: var(--orange); }
 .utility-bar::before { display: none; }
 .utility-inner { min-height: 44px; padding-block: 6px; }
 .utility-location { gap: 18px; }
@@ -870,7 +868,7 @@ html.intro-active .welcome-intro.is-exiting { transform: translateY(-100%); }
 	.nav-search { flex: 1 1 100%; margin-left: 0; }
 }
 /* Explore Asian flavors: category labels act as card titles */
-.discovery-card .discovery-label { margin: 0 0 10px; color: var(--brand-red); font-family: var(--font-display); font-size: 23px; font-weight: 400; line-height: 1.16; }
+.discovery-card .discovery-label { margin: 0 0 10px; color: var(--orange); font-family: var(--font-display); font-size: 23px; font-weight: 400; line-height: 1.16; }
 @media (max-width: 760px) { .discovery-card .discovery-label { margin-bottom: 8px; font-size: 18px; } }
 @media (max-width: 480px) { .discovery-card .discovery-label { margin-bottom: 6px; font-size: 17px; line-height: 1.14; } }
 
