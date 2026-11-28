@@ -891,3 +891,16 @@ html.intro-active .welcome-intro.is-exiting { transform: translateY(-100%); }
 	.nav-link > span::after { bottom: -6px; }
 	.nav-search { align-self: center; }
 }
+
+/* Utility bar color system: orange bar, original dark brand green content */
+.utility-bar { color: var(--forest); background: var(--orange); }
+.utility-link, .utility-location .utility-link, .utility-action, .account-display, .account-welcome,
+.account-sign-in, .utility-icon-button, .cart-button.utility-cart { color: var(--forest); }
+.utility-link:hover, .utility-location .utility-link:hover, .account-sign-in:hover,
+.utility-icon-button:hover, .cart-button.utility-cart:hover { color: var(--forest); opacity: .75; }
+.account-display-icon { border-color: var(--forest); }
+.lang-toggle { border-color: var(--forest); }
+.lang-toggle button { color: var(--forest); background: transparent; }
+.lang-toggle button:hover { background: rgba(var(--forest-rgb), .12); }
+.lang-toggle button[aria-pressed="true"] { color: var(--cream); background: var(--forest); }
+.lang-toggle button:focus-visible { outline-color: var(--forest); }
